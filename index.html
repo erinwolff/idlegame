@@ -24,21 +24,28 @@
       };
 
       var game = new Phaser.Game(config);
-      var acolyte;
 
       function preload() {
         this.load.image("acolyte", "src/assets/acolyte.png");
+        this.load.image("acolyteBackground", "src/assets/acolyte_bg.jpeg");
       }
 
       function create() {
-        this.cameras.main.setBackgroundColor("#5F6764");
+        this.add
+          .image(
+            this.cameras.main.centerX,
+            this.cameras.main.centerY,
+            "acolyteBackground"
+          )
+          .setOrigin(0.5, 0.5);
+        this.cameras.main.setBackgroundColor("#ffffff");
 
-        acolyte = this.add.image(
+        const acolyte = this.add.image(
           this.cameras.main.centerX,
           this.cameras.main.centerY,
           "acolyte"
         );
-        acolyte.setOrigin(0.5, 0.5);
+        acolyte.setOrigin(0.5, 0.2);
         acolyte.setScale(0.3);
       }
 

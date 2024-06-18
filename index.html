@@ -37,7 +37,8 @@
             this.cameras.main.centerY,
             "acolyteBackground"
           )
-          .setOrigin(0.5, 0.5);
+          .setOrigin(0.5, 0.5)
+          .setDisplaySize(this.cameras.main.width, this.cameras.main.height);
         this.cameras.main.setBackgroundColor("#ffffff");
 
         const acolyte = this.add.image(

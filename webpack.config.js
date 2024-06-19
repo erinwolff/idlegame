@@ -37,4 +37,5 @@ module.exports = {
       rewrites: [{ from: /^\/$/, to: "/index.html" }],
     },
   },
+  mode: "development",
 };

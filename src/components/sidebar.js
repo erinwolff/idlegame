@@ -18,15 +18,19 @@ export default class Sidebar extends Phaser.GameObjects.Container {
         this.scene.rexUI.add.roundRectangle(0, 0, 0, 0, 0, 0xcc3a33)
       );
 
+    this.add(sizer);
+
+    // Input text box for the player to name their priest
     const inputText = this.scene.add.rexInputText(0, 0, 240, 50, {
       type: "text",
-      placeholder: "Name Your Priest",
+      placeholder: "Name Your Acolyte",
       fontSize: "20px",
       color: "#000000",
       backgroundColor: "#DD9292",
       fontFamily: "Lato",
       borderRadius: "10px",
       maxLength: 20,
+      paddingLeft: "10px",
     });
 
     sizer.add(inputText, 0, "center", {
@@ -36,7 +40,6 @@ export default class Sidebar extends Phaser.GameObjects.Container {
       right: 10,
     });
 
-    this.add(sizer);
     sizer.layout();
   }
 }

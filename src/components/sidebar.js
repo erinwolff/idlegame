@@ -10,7 +10,7 @@ export default class Sidebar extends Phaser.GameObjects.Container {
 
     const sizer = this.scene.rexUI.add
       .sizer({
-        orientation: "x",
+        orientation: "y",
         width,
         height,
       })
@@ -34,8 +34,34 @@ export default class Sidebar extends Phaser.GameObjects.Container {
     });
 
     sizer.add(inputText, 0, "center", {
-      top: 100,
-      bottom: 20,
+      top: 1040,
+      left: 270,
+      right: 10,
+    });
+
+    // Label to display the player's progression path status
+    const progressionLabel = this.scene.rexUI.add.label({
+      background: this.scene.rexUI.add.roundRectangle(
+        0,
+        0,
+        240,
+        50,
+        10,
+        0xdd9292
+      ),
+      width: 240,
+      height: 50,
+      text: this.scene.add.text(0, 0, "Status", {
+        fontSize: "20px",
+        color: "#000000",
+        fontFamily: "Lato",
+        backgroundColor: "#DD9292",
+      }),
+      space: { left: 10 },
+    });
+
+    sizer.add(progressionLabel, 0, "center", {
+      top: 20,
       left: 270,
       right: 10,
     });

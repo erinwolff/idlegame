@@ -1,3 +1,5 @@
+import Sidebar from "../components/sidebar";
+
 export default class CreateScene extends Phaser.Scene {
   constructor() {
     super("CreateScene");
@@ -29,34 +31,6 @@ export default class CreateScene extends Phaser.Scene {
     acolyte.setOrigin(0.5, 0.2);
     acolyte.setScale(0.3);
 
-    const sidebar = this.rexUI.add
-      .sizer({
-        orientation: "x",
-        x: 0,
-        y: 0,
-        width: 400,
-        height: 2000,
-      })
-      .addBackground(this.rexUI.add.roundRectangle(0, 0, 0, 0, 0, 0xcc3a33));
-
-    const text = this.add.rexInputText(0, 0, 240, 50, {
-      type: "text",
-      placeholder: "Name Your Priest",
-      fontSize: "20px",
-      color: "#000000",
-      backgroundColor: "#DD9292",
-      fontFamily: "Lato",
-      borderRadius: "10px",
-      maxLength: 20,
-    });
-
-    sidebar.add(text, 0, "center", {
-      top: 100,
-      bottom: 20,
-      left: 270,
-      right: 10,
-    });
-
-    sidebar.layout();
+    const sidebar = new Sidebar(this, 0, 0, 400, 2000);
   }
 }

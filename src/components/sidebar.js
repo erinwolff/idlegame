@@ -31,6 +31,7 @@ export default class Sidebar extends Phaser.GameObjects.Container {
       borderRadius: "10px",
       maxLength: 20,
       paddingLeft: "10px",
+      tooltip: "Your acolyte's name",
     });
 
     sizer.add(inputText, 0, "center", {
@@ -61,6 +62,53 @@ export default class Sidebar extends Phaser.GameObjects.Container {
     });
 
     sizer.add(progressionLabel, 0, "center", {
+      top: 20,
+      left: 270,
+      right: 10,
+    });
+
+    // Input to display player's worship details
+    const worshipInput = this.scene.add.rexInputText(0, 0, 240, 50, {
+      type: "text",
+      placeholder: "Choose Your Worship",
+      fontSize: "20px",
+      color: "#000000",
+      backgroundColor: "#DD9292",
+      fontFamily: "Lato",
+      borderRadius: "10px",
+      maxLength: 20,
+      paddingLeft: "10px",
+      tooltip: "Your choice of worship",
+    });
+
+    sizer.add(worshipInput, 0, "center", {
+      top: 20,
+      left: 270,
+      right: 10,
+    });
+
+    // Input to display player's available upgrades
+    const upgradesLabel = this.scene.rexUI.add.label({
+      background: this.scene.rexUI.add.roundRectangle(
+        0,
+        0,
+        240,
+        50,
+        10,
+        0xdd9292
+      ),
+      width: 240,
+      height: 50,
+      text: this.scene.add.text(0, 0, "Upgrades", {
+        fontSize: "20px",
+        color: "#000000",
+        fontFamily: "Lato",
+        backgroundColor: "#DD9292",
+      }),
+      space: { left: 10 },
+    });
+
+    sizer.add(upgradesLabel, 0, "center", {
       top: 20,
       left: 270,
       right: 10,

@@ -1,5 +1,6 @@
 import RexUIPlugin from "phaser3-rex-plugins/templates/ui/ui-plugin.js";
 import InputTextPlugin from "phaser3-rex-plugins/plugins/inputtext-plugin.js";
+import WebFontLoaderPlugin from "phaser3-rex-plugins/plugins/webfontloader-plugin.js";
 import PreloadScene from "./scenes/preloadScene.js";
 import CreateScene from "./scenes/createScene.js";
 import UpdateScene from "./scenes/updateScene.js";
@@ -34,6 +35,11 @@ const config = {
       {
         key: "rexInputTextPlugin",
         plugin: InputTextPlugin,
+        start: true,
+      },
+      {
+        key: "rexWebFontLoader",
+        plugin: WebFontLoaderPlugin,
         start: true,
       },
     ],

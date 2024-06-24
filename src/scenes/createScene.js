@@ -1,4 +1,5 @@
 import Sidebar from "../components/sidebar";
+import Topbar from "../components/topbar";
 
 export default class CreateScene extends Phaser.Scene {
   constructor() {
@@ -32,5 +33,6 @@ export default class CreateScene extends Phaser.Scene {
     acolyte.setScale(0.3);
 
     const sidebar = new Sidebar(this, 0, 0, 400, 2000);
+    const topbar = new Topbar(this, 0, 20, 4000, 45);
   }
 }

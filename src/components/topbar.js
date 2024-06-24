@@ -47,7 +47,7 @@ export default class Topbar extends Phaser.GameObjects.Container {
         10, // Border radius
         0xdd9292 // Background color
       ),
-      text: this.scene.add.text(0, 0, "Faith Currency Amount", {
+      text: this.scene.add.text(0, 0, "Total Faith", {
         fontSize: "20px",
         color: "#000000",
         fontFamily: "Lato",

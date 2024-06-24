@@ -43,12 +43,12 @@ export default class Sidebar extends Phaser.GameObjects.Container {
     // Label to display the player's progression path status
     const progressionLabel = this.scene.rexUI.add.label({
       background: this.scene.rexUI.add.roundRectangle(
-        0,
-        0,
-        240,
-        50,
-        10,
-        0xdd9292
+        0, // X position
+        0, // Y position
+        240, // Width
+        50, // Height
+        10, // Border radius
+        0xdd9292 // Background color
       ),
       width: 240,
       height: 50,

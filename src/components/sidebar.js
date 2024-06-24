@@ -114,6 +114,60 @@ export default class Sidebar extends Phaser.GameObjects.Container {
       right: 10,
     });
 
+    // Button for player to save the game
+    const saveButton = this.scene.rexUI.add.label({
+      background: this.scene.rexUI.add.roundRectangle(
+        0, // X position
+        0, // Y position
+        240, // Width
+        50, // Height
+        10, // Border radius
+        0xdd9292 // Background color
+      ),
+      width: 240,
+      height: 50,
+      text: this.scene.add.text(0, 0, "Save Game", {
+        fontSize: "20px",
+        color: "#000000",
+        fontFamily: "Lato",
+        backgroundColor: "#DD9292",
+      }),
+      space: { left: 10 },
+    });
+
+    sizer.add(saveButton, 0, "center", {
+      top: 500,
+      left: 270,
+      right: 10,
+    });
+
+    // Button for player to restart the game
+    const restartButton = this.scene.rexUI.add.label({
+      background: this.scene.rexUI.add.roundRectangle(
+        0, // X position
+        0, // Y position
+        240, // Width
+        50, // Height
+        10, // Border radius
+        0xf30103 // Background color
+      ),
+      width: 240,
+      height: 50,
+      text: this.scene.add.text(0, 0, "Restart Game", {
+        fontSize: "20px",
+        color: "#000000",
+        fontFamily: "Lato",
+        backgroundColor: "#F30103",
+      }),
+      space: { left: 10 },
+    });
+
+    sizer.add(restartButton, 0, "center", {
+      top: 15,
+      left: 270,
+      right: 10,
+    });
+
     sizer.layout();
   }
 }

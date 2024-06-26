@@ -1,7 +1,7 @@
 import "phaser3-rex-plugins/templates/ui/ui-plugin.js";
 
 export default class Topbar extends Phaser.GameObjects.Container {
-  constructor(scene, x, y, width, height) {
+  constructor(scene, x, y, width, height, initialFaith) {
     super(scene, x, y);
     this.scene = scene;
 
@@ -38,7 +38,7 @@ export default class Topbar extends Phaser.GameObjects.Container {
     followersLabel.x = 1400;
 
     // Label to display the player's total Faith currency
-    const faithLabel = this.scene.rexUI.add.label({
+    this.faithLabel = this.scene.rexUI.add.label({
       background: this.scene.rexUI.add.roundRectangle(
         105, // X position
         10, // Y position
@@ -47,19 +47,23 @@ export default class Topbar extends Phaser.GameObjects.Container {
         10, // Border radius
         0xdd9292 // Background color
       ),
-      text: this.scene.add.text(0, 0, "Total Faith", {
+      text: this.scene.add.text(0, 0, `Total Faith: ${initialFaith}`, {
         fontSize: "20px",
         color: "#000000",
         fontFamily: "Lato",
         backgroundColor: "#DD9292",
       }),
     });
-    faithLabel.x = 1615;
+    this.faithLabel.x = 1615;
 
     // Add labels to the sizer or directly to the scene depending on your layout needs
     this.add(followersLabel);
-    this.add(faithLabel);
+    this.add(this.faithLabel);
 
     sizer.layout();
+  }
+  updateFaithLabel(newFaith) {
+    let textObject = this.faithLabel.getElement("text");
+    textObject.setText(`Total Faith: ${newFaith}`);
   }
 }

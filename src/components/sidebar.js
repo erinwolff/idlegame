@@ -1,7 +1,7 @@
 import "phaser3-rex-plugins/templates/ui/ui-plugin.js";
 
 export default class Sidebar extends Phaser.GameObjects.Container {
-  constructor(scene, x, y, width, height) {
+  constructor(scene, x, y, width, height, resetGameFunction, topbar) {
     super(scene, x, y);
     this.scene = scene;
 
@@ -20,8 +20,11 @@ export default class Sidebar extends Phaser.GameObjects.Container {
 
     this.add(sizer);
 
+    this.resetGameFunction = resetGameFunction;
+    this.topbar = topbar;
+
     // Input text box for the player to name their priest
-    const inputText = this.scene.add.rexInputText(0, 0, 240, 50, {
+    this.nameInput = this.scene.add.rexInputText(0, 0, 240, 50, {
       type: "text",
       placeholder: "Name Your Acolyte",
       fontSize: "20px",
@@ -35,7 +38,7 @@ export default class Sidebar extends Phaser.GameObjects.Container {
       autoComplete: "off",
     });
 
-    sizer.add(inputText, 0, "center", {
+    sizer.add(this.nameInput, 0, "center", {
       top: 1040,
       left: 270,
       right: 10,
@@ -69,7 +72,7 @@ export default class Sidebar extends Phaser.GameObjects.Container {
     });
 
     // Input to display player's worship details
-    const worshipInput = this.scene.add.rexInputText(0, 0, 240, 50, {
+    this.worshipInput = this.scene.add.rexInputText(0, 0, 240, 50, {
       type: "text",
       placeholder: "Choose Your Worship",
       fontSize: "20px",
@@ -83,7 +86,7 @@ export default class Sidebar extends Phaser.GameObjects.Container {
       autoComplete: "off",
     });
 
-    sizer.add(worshipInput, 0, "center", {
+    sizer.add(this.worshipInput, 0, "center", {
       top: 20,
       left: 270,
       right: 10,
@@ -168,6 +171,11 @@ export default class Sidebar extends Phaser.GameObjects.Container {
       top: 15,
       left: 270,
       right: 10,
+    });
+
+    restartButton.setInteractive({ useHandCursor: true });
+    restartButton.on("pointerdown", () => {
+      this.resetGameFunction();
     });
 
     sizer.layout();

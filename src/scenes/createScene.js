@@ -4,6 +4,7 @@ import Topbar from "../components/topbar";
 export default class CreateScene extends Phaser.Scene {
   constructor() {
     super("CreateScene");
+    this.resetGame = this.resetGame.bind(this);
   }
 
   create() {
@@ -37,12 +38,26 @@ export default class CreateScene extends Phaser.Scene {
     acolyte.setDepth(5);
     acolyte.setInteractive({ useHandCursor: true });
 
-    const sidebar = new Sidebar(this, 0, 0, 400, 2000);
     this.topbar = new Topbar(this, 0, 20, 4000, 45, this.totalFaith);
+    this.sidebar = new Sidebar(
+      this,
+      0,
+      0,
+      400,
+      2000,
+      this.resetGame,
+      this.topbar
+    );
 
     acolyte.on("pointerdown", () => {
       this.totalFaith += 1;
       this.topbar.updateFaithLabel(this.totalFaith);
     });
+  }
+  resetGame() {
+    this.totalFaith = 0;
+    this.topbar.updateFaithLabel(this.totalFaith);
+    this.sidebar.nameInput.setText("");
+    this.sidebar.worshipInput.setText("");
   }
 }

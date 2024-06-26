@@ -32,6 +32,7 @@ export default class Sidebar extends Phaser.GameObjects.Container {
       maxLength: 20,
       paddingLeft: "10px",
       tooltip: "Your acolyte's name",
+      autoComplete: "off",
     });
 
     sizer.add(inputText, 0, "center", {
@@ -79,6 +80,7 @@ export default class Sidebar extends Phaser.GameObjects.Container {
       maxLength: 20,
       paddingLeft: "10px",
       tooltip: "Your choice of worship",
+      autoComplete: "off",
     });
 
     sizer.add(worshipInput, 0, "center", {

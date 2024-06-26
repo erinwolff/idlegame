@@ -23,12 +23,11 @@ const config = {
     createContainer: true,
   },
   input: {
-    mouse: {
-      target: divId,
-    },
-    touch: {
-      target: divId,
-    },
+    keyboard: true,
+    mouse: true,
+    touch: true,
+    gamepad: false,
+    debug: true,
   },
   plugins: {
     global: [

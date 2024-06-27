@@ -1,7 +1,25 @@
 import "phaser3-rex-plugins/templates/ui/ui-plugin.js";
+import {
+  initiateUpgrades,
+  priestessUpgrades,
+  highPriestessUpgrades,
+  oracleUpgrades,
+  saintUpgrades,
+  demigodUpgrades,
+  goddessUpgrades,
+} from "../constants/upgrades";
 
 export default class Sidebar extends Phaser.GameObjects.Container {
-  constructor(scene, x, y, width, height, resetGameFunction, topbar) {
+  constructor(
+    scene,
+    x,
+    y,
+    width,
+    height,
+    resetGameFunction,
+    topbar,
+    currentPhase
+  ) {
     super(scene, x, y);
     this.scene = scene;
 
@@ -22,6 +40,7 @@ export default class Sidebar extends Phaser.GameObjects.Container {
 
     this.resetGameFunction = resetGameFunction;
     this.topbar = topbar;
+    this.currentPhase = currentPhase;
 
     // Input text box for the player to name their priest
     this.nameInput = this.scene.add.rexInputText(0, 0, 240, 50, {
@@ -119,6 +138,49 @@ export default class Sidebar extends Phaser.GameObjects.Container {
       right: 10,
     });
 
+    // Dynamically create upgrade buttons based on the player's current phase
+    const upgrades = this.getCurrentPhaseUpgrades();
+    upgrades.forEach((upgrade) => {
+      const upgradeButton = this.scene.rexUI.add.label({
+        background: this.scene.rexUI.add.roundRectangle(
+          0, // X position
+          0, // Y position
+          200, // Width
+          50, // Height
+          10, // Border radius
+          0xf4c6c6 // Background color
+        ),
+        width: 200,
+        height: 50,
+        text: this.scene.add.text(0, 0, upgrade.name, {
+          fontSize: "18px",
+          color: "#000000",
+          fontFamily: "Lato",
+          backgroundColor: "#F4C6C6",
+        }),
+        align: "center",
+      });
+
+      sizer.add(upgradeButton, 0, "center", {
+        top: 20,
+        left: 270,
+        right: 10,
+      });
+
+      upgradeButton.setInteractive({ useHandCursor: true });
+      upgradeButton.on("pointerover", () => {
+        upgradeButton.getElement("background").setFillStyle(0x8bc34a);
+        upgradeButton.getElement("text").setBackgroundColor("#8BC34A");
+        upgradeButton.getElement("background").setStrokeStyle(1, 0xffffff);
+      });
+      upgradeButton.on("pointerout", () => {
+        upgradeButton.getElement("background").setFillStyle(0xf4c6c6);
+        upgradeButton.getElement("text").setBackgroundColor("#F4C6C6");
+        upgradeButton.getElement("background").setStrokeStyle();
+      });
+      // Add functionality to activate the upgrades here
+    });
+
     // Button for player to save the game
     const saveButton = this.scene.rexUI.add.label({
       background: this.scene.rexUI.add.roundRectangle(
@@ -127,7 +189,7 @@ export default class Sidebar extends Phaser.GameObjects.Container {
         240, // Width
         50, // Height
         10, // Border radius
-        0xdd9292 // Background color
+        0x64b5f6 // Background color
       ),
       width: 240,
       height: 50,
@@ -135,13 +197,13 @@ export default class Sidebar extends Phaser.GameObjects.Container {
         fontSize: "20px",
         color: "#000000",
         fontFamily: "Lato",
-        backgroundColor: "#DD9292",
+        backgroundColor: "#64B5F6",
       }),
       space: { left: 10 },
     });
 
     sizer.add(saveButton, 0, "center", {
-      top: 500,
+      top: 30,
       left: 270,
       right: 10,
     });
@@ -154,7 +216,7 @@ export default class Sidebar extends Phaser.GameObjects.Container {
         240, // Width
         50, // Height
         10, // Border radius
-        0xf30103 // Background color
+        0xdd9292 // Background color
       ),
       width: 240,
       height: 50,
@@ -162,7 +224,7 @@ export default class Sidebar extends Phaser.GameObjects.Container {
         fontSize: "20px",
         color: "#000000",
         fontFamily: "Lato",
-        backgroundColor: "#F30103",
+        backgroundColor: "#DD9292",
       }),
       space: { left: 10 },
     });
@@ -173,11 +235,58 @@ export default class Sidebar extends Phaser.GameObjects.Container {
       right: 10,
     });
 
+    saveButton.setInteractive({ useHandCursor: true });
+    saveButton.on("pointerover", () => {
+      saveButton.getElement("background").setFillStyle(0x2196f3);
+      saveButton.getElement("text").setBackgroundColor("#2196F3");
+      saveButton.getElement("background").setStrokeStyle(1, 0xffffff);
+    });
+    saveButton.on("pointerout", () => {
+      saveButton.getElement("background").setFillStyle(0x64b5f6);
+      saveButton.getElement("text").setBackgroundColor("#64B5F6");
+      saveButton.getElement("background").setStrokeStyle();
+    });
+
     restartButton.setInteractive({ useHandCursor: true });
+    restartButton.on("pointerover", () => {
+      restartButton.getElement("background").setFillStyle(0xf30103);
+      restartButton.getElement("text").setBackgroundColor("#F30103");
+      restartButton.getElement("background").setStrokeStyle(1, 0xffffff);
+    });
+    restartButton.on("pointerout", () => {
+      restartButton.getElement("background").setFillStyle(0xdd9292);
+      restartButton.getElement("text").setBackgroundColor("#DD9292");
+      restartButton.getElement("background").setStrokeStyle();
+    });
     restartButton.on("pointerdown", () => {
       this.resetGameFunction();
     });
 
     sizer.layout();
+  }
+  getCurrentPhaseUpgrades() {
+    if (this.currentPhase === "initiate") {
+      return initiateUpgrades;
+    }
+    if (this.currentPhase === "priestess") {
+      return priestessUpgrades;
+    }
+    if (this.currentPhase === "highPriestess") {
+      return highPriestessUpgrades;
+    }
+    if (this.currentPhase === "oracle") {
+      return oracleUpgrades;
+    }
+    if (this.currentPhase === "saint") {
+      return saintUpgrades;
+    }
+    if (this.currentPhase === "demigod") {
+      return demigodUpgrades;
+    }
+    if (this.currentPhase === "goddess") {
+      return goddessUpgrades;
+    } else {
+      return [];
+    }
   }
 }

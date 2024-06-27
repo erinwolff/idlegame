@@ -15,6 +15,8 @@ export default class CreateScene extends Phaser.Scene {
       this.cameras.main.height /
       this.textures.get("acolyteBackground").getSourceImage().height;
 
+    this.currentPhase = "initiate"; // Game begins in the initiate phase
+
     this.add
       .image(
         this.cameras.main.centerX,
@@ -46,7 +48,8 @@ export default class CreateScene extends Phaser.Scene {
       400,
       2000,
       this.resetGame,
-      this.topbar
+      this.topbar,
+      this.currentPhase
     );
 
     acolyte.on("pointerdown", () => {

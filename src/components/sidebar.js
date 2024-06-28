@@ -172,11 +172,25 @@ export default class Sidebar extends Phaser.GameObjects.Container {
         upgradeButton.getElement("background").setFillStyle(0x8bc34a);
         upgradeButton.getElement("text").setBackgroundColor("#8BC34A");
         upgradeButton.getElement("background").setStrokeStyle(1, 0xffffff);
+        upgradeButton.getElement("text").setText(upgrade.description);
+        // if the text is too long, wrap it, expand the label width and height, and center the text inside the label
+        if (upgrade.description.length > 20) {
+          upgradeButton.getElement("text").setWordWrapWidth(220);
+          upgradeButton.getElement("background").resize(240, 80);
+          upgradeButton.getElement("text").setOrigin(0.2, 0.4);
+        }
+        // if the upgrade.name is too short, center the upgrade.description text inside the label
+        if (upgrade.name.length < 17) {
+          upgradeButton.getElement("text").setOrigin(0.13, 0.05);
+        }
       });
       upgradeButton.on("pointerout", () => {
         upgradeButton.getElement("background").setFillStyle(0xf4c6c6);
         upgradeButton.getElement("text").setBackgroundColor("#F4C6C6");
         upgradeButton.getElement("background").setStrokeStyle();
+        upgradeButton.getElement("text").setText(upgrade.name);
+        upgradeButton.getElement("background").resize(200, 50);
+        upgradeButton.getElement("text").setOrigin(0);
       });
       // Add functionality to activate the upgrades here
     });

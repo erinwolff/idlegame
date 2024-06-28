@@ -1,12 +1,15 @@
+// Must keep description length under 117 characters to prevent text overflow
+
 const initiateUpgrades = [
   {
     name: "Prayer Efficiency",
-    description: "Placeholder text.",
+    description:
+      "Placeholder text test test test test test test test test test test test test test test test test test test test test.",
     cost: 10,
   },
   {
     name: "Prayer Automation",
-    description: "Placeholder text.",
+    description: "Placeholder text...............................",
     cost: 50,
   },
   {

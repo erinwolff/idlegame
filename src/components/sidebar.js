@@ -139,61 +139,7 @@ export default class Sidebar extends Phaser.GameObjects.Container {
     });
 
     // Dynamically create upgrade buttons based on the player's current phase
-    const upgrades = this.getCurrentPhaseUpgrades();
-    upgrades.forEach((upgrade) => {
-      const upgradeButton = this.scene.rexUI.add.label({
-        background: this.scene.rexUI.add.roundRectangle(
-          0, // X position
-          0, // Y position
-          200, // Width
-          50, // Height
-          10, // Border radius
-          0xf4c6c6 // Background color
-        ),
-        width: 200,
-        height: 50,
-        text: this.scene.add.text(0, 0, upgrade.name, {
-          fontSize: "18px",
-          color: "#000000",
-          fontFamily: "Lato",
-          backgroundColor: "#F4C6C6",
-        }),
-        align: "center",
-      });
-
-      sizer.add(upgradeButton, 0, "center", {
-        top: 20,
-        left: 270,
-        right: 10,
-      });
-
-      upgradeButton.setInteractive({ useHandCursor: true });
-      upgradeButton.on("pointerover", () => {
-        upgradeButton.getElement("background").setFillStyle(0x8bc34a);
-        upgradeButton.getElement("text").setBackgroundColor("#8BC34A");
-        upgradeButton.getElement("background").setStrokeStyle(1, 0xffffff);
-        upgradeButton.getElement("text").setText(upgrade.description);
-        // if the text is too long, wrap it, expand the label width and height, and center the text inside the label
-        if (upgrade.description.length > 20) {
-          upgradeButton.getElement("text").setWordWrapWidth(220);
-          upgradeButton.getElement("background").resize(240, 80);
-          upgradeButton.getElement("text").setOrigin(0.2, 0.4);
-        }
-        // if the upgrade.name is too short, center the upgrade.description text inside the label
-        if (upgrade.name.length < 17) {
-          upgradeButton.getElement("text").setOrigin(0.13, 0.05);
-        }
-      });
-      upgradeButton.on("pointerout", () => {
-        upgradeButton.getElement("background").setFillStyle(0xf4c6c6);
-        upgradeButton.getElement("text").setBackgroundColor("#F4C6C6");
-        upgradeButton.getElement("background").setStrokeStyle();
-        upgradeButton.getElement("text").setText(upgrade.name);
-        upgradeButton.getElement("background").resize(200, 50);
-        upgradeButton.getElement("text").setOrigin(0);
-      });
-      // Add functionality to activate the upgrades here
-    });
+    this.createUpgradeButtons(sizer);
 
     // Button for player to save the game
     const saveButton = this.scene.rexUI.add.label({
@@ -302,5 +248,108 @@ export default class Sidebar extends Phaser.GameObjects.Container {
     } else {
       return [];
     }
+  }
+  createUpgradeButtons(sizer) {
+    const upgrades = this.getCurrentPhaseUpgrades();
+    upgrades.forEach((upgrade) => {
+      const upgradeButton = this.scene.rexUI.add.label({
+        background: this.scene.rexUI.add.roundRectangle(
+          0, // X position
+          0, // Y position
+          200, // Width
+          50, // Height
+          10, // Border radius
+          0xf4c6c6 // Background color
+        ),
+        width: 200,
+        height: 50,
+        text: this.scene.add.text(0, 0, upgrade.name, {
+          fontSize: "18px",
+          color: "#000000",
+          fontFamily: "Lato",
+          backgroundColor: "#F4C6C6",
+        }),
+        align: "center",
+      });
+
+      sizer.add(upgradeButton, 0, "center", {
+        top: 20,
+        left: 270,
+        right: 10,
+      });
+
+      upgradeButton.setInteractive({ useHandCursor: true });
+
+      upgradeButton.on("pointerover", () => {
+        if (
+          upgradeButton.getElement("text").text !==
+          "Prayer Automation Activated"
+        ) {
+          upgradeButton.getElement("background").setFillStyle(0x8bc34a);
+          upgradeButton.getElement("text").setBackgroundColor("#8BC34A");
+          upgradeButton.getElement("background").setStrokeStyle(1, 0xffffff);
+          upgradeButton.getElement("text").setText(upgrade.description);
+          // if the text is too long, wrap it, expand the label width and height, and center the text inside the label
+          if (upgrade.description.length > 20) {
+            upgradeButton.getElement("text").setWordWrapWidth(220);
+            upgradeButton.getElement("background").resize(240, 80);
+            upgradeButton.getElement("text").setOrigin(0.2, 0.4);
+          }
+          // if the upgrade.name is too short, center the upgrade.description text inside the label
+          if (upgrade.name.length < 17) {
+            upgradeButton.getElement("text").setOrigin(0.13, 0.05);
+          }
+        }
+      });
+
+      // Add functionality to activate the upgrades here
+      upgradeButton.on("pointerdown", () => {
+        if (
+          upgrade.name === "Prayer Automation" &&
+          this.scene.totalFaith >= 5 &&
+          !this.prayerAutomationUnlocked
+        ) {
+          this.prayerAutomationUnlocked = true;
+          this.scene.totalFaith -= 5;
+          this.topbar.updateFaithLabel(this.scene.totalFaith);
+          upgradeButton
+            .getElement("text")
+            .setText("Prayer Automation Activated");
+          upgradeButton.getElement("background").setFillStyle(0x8bc34a);
+          upgradeButton.getElement("text").setBackgroundColor("#8bc34a");
+          upgradeButton.getElement("background").setStrokeStyle();
+          upgradeButton.getElement("background").resize(200, 55);
+          upgradeButton.getElement("text").setOrigin(0.1, 0.3);
+
+          // Start passive faith generation
+          if (!this.scene.passiveFaithEvent) {
+            this.scene.passiveFaithEvent = this.scene.time.addEvent({
+              delay: 500, // .5 seconds
+              callback: () => {
+                if (this.prayerAutomationUnlocked) {
+                  this.scene.totalFaith++;
+                  this.topbar.updateFaithLabel(this.scene.totalFaith);
+                }
+              },
+              loop: true,
+            });
+          }
+        }
+      });
+
+      upgradeButton.on("pointerout", () => {
+        if (
+          upgradeButton.getElement("text").text !==
+          "Prayer Automation Activated"
+        ) {
+          upgradeButton.getElement("background").setFillStyle(0xf4c6c6);
+          upgradeButton.getElement("text").setBackgroundColor("#F4C6C6");
+          upgradeButton.getElement("background").setStrokeStyle();
+          upgradeButton.getElement("text").setText(upgrade.name);
+          upgradeButton.getElement("background").resize(200, 50);
+          upgradeButton.getElement("text").setOrigin(0);
+        }
+      });
+    });
   }
 }

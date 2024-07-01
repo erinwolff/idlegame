@@ -29,6 +29,7 @@ export default class CreateScene extends Phaser.Scene {
     this.input.enabled = true;
 
     this.totalFaith = 0;
+    this.passiveFaithEvent = false;
 
     const acolyte = this.add.image(
       this.cameras.main.centerX,
@@ -59,8 +60,16 @@ export default class CreateScene extends Phaser.Scene {
   }
   resetGame() {
     this.totalFaith = 0;
+    this.currentPhase = "initiate";
     this.topbar.updateFaithLabel(this.totalFaith);
     this.sidebar.nameInput.setText("");
     this.sidebar.worshipInput.setText("");
+    this.sidebar.prayerAutomationUnlocked = false;
+
+    // Stop the passive faith generation loop
+    if (this.passiveFaithEvent) {
+      this.scene.passiveFaithEvent.destroy();
+      this.passiveFaithEvent = false;
+    }
   }
 }

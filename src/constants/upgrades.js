@@ -9,7 +9,8 @@ const initiateUpgrades = [
   },
   {
     name: "Prayer Automation",
-    description: "Placeholder text...............................",
+    description: `Cost: 50 faith
+Allows prayers to be performed automatically. `,
     cost: 50,
   },
   {

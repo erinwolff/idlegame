@@ -269,7 +269,7 @@ export default class Sidebar extends Phaser.GameObjects.Container {
           fontFamily: "Lato",
           backgroundColor: "#F4C6C6",
           padding: {
-            left: 10,
+            left: 5,
           },
         }),
       });

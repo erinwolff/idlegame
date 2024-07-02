@@ -391,6 +391,75 @@ ${upgrade.description}`);
           }
         }
       });
+
+      // Logic for activating the Basic Rituals upgrade
+      upgradeButton.on("pointerdown", () => {
+        if (
+          upgrade.name === "Basic Rituals" &&
+          this.scene.totalFaith >= 200 &&
+          !upgrade.active
+        ) {
+          upgrade.active = true;
+          this.scene.totalFaith -= 200;
+          this.topbar.updateFaithLabel(this.scene.totalFaith);
+          upgradeButton.getElement("background").setFillStyle(0x8bc34a);
+          upgradeButton.getElement("text").setBackgroundColor("#8bc34a");
+          upgradeButton.getElement("background").setStrokeStyle();
+          upgradeButton.getElement("text").setText(`${upgrade.name} Activated`);
+          upgradeButton.getElement("text").setWordWrapWidth(200);
+          upgradeButton.getElement("background").resize(220, 55);
+          upgradeButton.getElement("text").setOrigin(0.05, 0.3);
+        }
+        // Temporary Passive Faith Boost Logic
+        if (upgrade.name === "Basic Rituals" && this.scene.passiveFaithEvent) {
+          const originalDelay = this.scene.passiveFaithEvent.delay;
+
+          // Increase passive faith generation rate
+          this.scene.passiveFaithEvent.delay *= 0.05; // 20 times faster
+
+          // Reset to original delay after 1 minute & reset to original button state
+          this.scene.time.delayedCall(60000, () => {
+            this.scene.passiveFaithEvent.delay = originalDelay;
+            upgrade.active = false;
+            upgradeButton.getElement("background").setFillStyle(0xf4c6c6);
+            upgradeButton.getElement("text").setBackgroundColor("#F4C6C6");
+            upgradeButton.getElement("background").setStrokeStyle();
+            upgradeButton.getElement("text").setText(upgrade.name);
+            upgradeButton.getElement("text").setWordWrapWidth(190);
+            upgradeButton.getElement("background").resize(200, 50);
+            upgradeButton.getElement("text").setOrigin(0);
+          });
+        } else if (
+          upgrade.name === "Basic Rituals" &&
+          !this.scene.passiveFaithEvent
+        ) {
+          // Start passive faith generation temporarily at the increased rate
+          this.scene.passiveFaithEvent = this.scene.time.addEvent({
+            delay: 50, // .05 seconds or 20 times faster
+            callback: () => {
+              this.scene.totalFaith++;
+              this.topbar.updateFaithLabel(this.scene.totalFaith);
+            },
+            loop: true,
+          });
+
+          // Stop passive faith generation after 1 minute & reset to original button state
+          this.scene.time.delayedCall(60000, () => {
+            this.scene.passiveFaithEvent.remove();
+            this.scene.passiveFaithEvent = null;
+            upgrade.active = false;
+            upgradeButton.getElement("background").setFillStyle(0xf4c6c6);
+            upgradeButton.getElement("text").setBackgroundColor("#F4C6C6");
+            upgradeButton.getElement("background").setStrokeStyle();
+            upgradeButton.getElement("text").setText(upgrade.name);
+            upgradeButton.getElement("text").setWordWrapWidth(190);
+            upgradeButton.getElement("background").resize(200, 50);
+            upgradeButton.getElement("text").setOrigin(0);
+          });
+        }
+      });
+
+      // Logic for activating the Recruit Followers upgrade
     });
   }
   resetUpgradeButtons() {

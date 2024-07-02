@@ -15,14 +15,15 @@ const initiateUpgrades = [
   },
   {
     name: "Basic Rituals",
-    description: "Placeholder text.",
-    cost: 30,
+    description:
+      "Perform simple rituals and boost faith generation for a limited time.",
+    cost: 200,
     active: false,
   },
   {
     name: "Recruit Followers",
-    description: "Placeholder text.",
-    cost: 20,
+    description: "Recruit a number of followers who passively generate faith.",
+    cost: 100,
     active: false,
   },
 ];

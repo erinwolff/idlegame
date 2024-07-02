@@ -3,9 +3,8 @@
 const initiateUpgrades = [
   {
     name: "Prayer Efficiency",
-    description:
-      "Placeholder text test test test test test test test test test test test test test test.",
-    cost: 10,
+    description: "Increases the amount of faith generated per prayer.",
+    cost: 50,
     active: false,
   },
   {

@@ -324,6 +324,8 @@ ${upgrade.description}`);
       });
 
       // Add functionality to activate the upgrades here
+
+      // Logic for activating the Prayer Automation upgrade
       upgradeButton.on("pointerdown", () => {
         if (
           upgrade.name === "Prayer Automation" &&

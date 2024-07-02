@@ -61,15 +61,24 @@ export default class CreateScene extends Phaser.Scene {
   resetGame() {
     this.totalFaith = 0;
     this.currentPhase = "initiate";
-    this.topbar.updateFaithLabel(this.totalFaith);
-    this.sidebar.nameInput.setText("");
-    this.sidebar.worshipInput.setText("");
-    this.sidebar.prayerAutomationUnlocked = false;
+    if (this.topbar) {
+      // Check if the topbar exists before updating it
+      this.topbar.updateFaithLabel(this.totalFaith);
+    }
 
-    // Stop the passive faith generation loop
+    if (this.sidebar) {
+      this.sidebar.nameInput.setText("");
+      this.sidebar.worshipInput.setText("");
+      this.sidebar.prayerAutomationUnlocked = false;
+      this.sidebar.resetUpgradeButtons(); // Reset upgrade buttons
+    }
+
+    // Stop the passive faith generation loop if it exists
     if (this.passiveFaithEvent) {
-      this.scene.passiveFaithEvent.destroy();
+      this.passiveFaithEvent.destroy();
       this.passiveFaithEvent = false;
     }
+
+    this.scene.restart();
   }
 }

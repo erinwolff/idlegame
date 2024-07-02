@@ -327,12 +327,12 @@ ${upgrade.description}`);
       upgradeButton.on("pointerdown", () => {
         if (
           upgrade.name === "Prayer Automation" &&
-          this.scene.totalFaith >= 5 &&
+          this.scene.totalFaith >= 20 &&
           !this.prayerAutomationUnlocked
         ) {
           this.prayerAutomationUnlocked = true;
           upgrade.active = true;
-          this.scene.totalFaith -= 5;
+          this.scene.totalFaith -= 20;
           this.topbar.updateFaithLabel(this.scene.totalFaith);
           upgradeButton.getElement("background").setFillStyle(0x8bc34a);
           upgradeButton.getElement("text").setBackgroundColor("#8bc34a");

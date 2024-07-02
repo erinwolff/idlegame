@@ -268,8 +268,10 @@ export default class Sidebar extends Phaser.GameObjects.Container {
           color: "#000000",
           fontFamily: "Lato",
           backgroundColor: "#F4C6C6",
+          padding: {
+            left: 5,
+          },
         }),
-        align: "center",
       });
 
       sizer.add(upgradeButton, 0, "center", {
@@ -281,24 +283,43 @@ export default class Sidebar extends Phaser.GameObjects.Container {
       upgradeButton.setInteractive({ useHandCursor: true });
 
       upgradeButton.on("pointerover", () => {
-        if (
-          upgradeButton.getElement("text").text !==
-          "Prayer Automation Activated"
-        ) {
+        if (upgrade.active === false) {
           upgradeButton.getElement("background").setFillStyle(0x8bc34a);
           upgradeButton.getElement("text").setBackgroundColor("#8BC34A");
           upgradeButton.getElement("background").setStrokeStyle(1, 0xffffff);
-          upgradeButton.getElement("text").setText(upgrade.description);
-          // if the text is too long, wrap it, expand the label width and height, and center the text inside the label
-          if (upgrade.description.length > 20) {
-            upgradeButton.getElement("text").setWordWrapWidth(220);
-            upgradeButton.getElement("background").resize(240, 80);
-            upgradeButton.getElement("text").setOrigin(0.2, 0.4);
-          }
-          // if the upgrade.name is too short, center the upgrade.description text inside the label
-          if (upgrade.name.length < 17) {
-            upgradeButton.getElement("text").setOrigin(0.13, 0.05);
-          }
+          upgradeButton.getElement("text").setText(`Cost: ${upgrade.cost}
+${upgrade.description}`);
+          upgradeButton.getElement("text").setWordWrapWidth(220);
+          upgradeButton.getElement("background").resize(240, 80);
+          upgradeButton.getElement("text").setOrigin(0.05, 0.4);
+        }
+        if (upgrade.active === true) {
+          upgradeButton.getElement("background").setFillStyle(0x8bc34a);
+          upgradeButton.getElement("text").setBackgroundColor("#8BC34A");
+          upgradeButton.getElement("background").setStrokeStyle(1, 0xffffff);
+          upgradeButton.getElement("text").setText(`${upgrade.description}`);
+          upgradeButton.getElement("text").setWordWrapWidth(220);
+          upgradeButton.getElement("background").resize(240, 80);
+          upgradeButton.getElement("text").setOrigin(0.05, 0.4);
+        }
+      });
+
+      upgradeButton.on("pointerout", () => {
+        if (upgrade.active === false) {
+          upgradeButton.getElement("background").setFillStyle(0xf4c6c6);
+          upgradeButton.getElement("text").setBackgroundColor("#F4C6C6");
+          upgradeButton.getElement("background").setStrokeStyle();
+          upgradeButton.getElement("text").setText(upgrade.name);
+          upgradeButton.getElement("background").resize(200, 50);
+          upgradeButton.getElement("text").setOrigin(0);
+        }
+        if (upgrade.active === true) {
+          upgradeButton.getElement("background").setFillStyle(0x8bc34a);
+          upgradeButton.getElement("text").setBackgroundColor("#8bc34a");
+          upgradeButton.getElement("background").setStrokeStyle();
+          upgradeButton.getElement("text").setText(`${upgrade.name} Activated`);
+          upgradeButton.getElement("background").resize(220, 55);
+          upgradeButton.getElement("text").setOrigin(0.05, 0.3);
         }
       });
 
@@ -310,16 +331,15 @@ export default class Sidebar extends Phaser.GameObjects.Container {
           !this.prayerAutomationUnlocked
         ) {
           this.prayerAutomationUnlocked = true;
+          upgrade.active = true;
           this.scene.totalFaith -= 5;
           this.topbar.updateFaithLabel(this.scene.totalFaith);
-          upgradeButton
-            .getElement("text")
-            .setText("Prayer Automation Activated");
           upgradeButton.getElement("background").setFillStyle(0x8bc34a);
           upgradeButton.getElement("text").setBackgroundColor("#8bc34a");
           upgradeButton.getElement("background").setStrokeStyle();
-          upgradeButton.getElement("background").resize(200, 55);
-          upgradeButton.getElement("text").setOrigin(0.1, 0.3);
+          upgradeButton.getElement("text").setText(`${upgrade.name} Activated`);
+          upgradeButton.getElement("background").resize(220, 55);
+          upgradeButton.getElement("text").setOrigin(0.05, 0.3);
 
           // Start passive faith generation
           if (!this.scene.passiveFaithEvent) {
@@ -336,20 +356,12 @@ export default class Sidebar extends Phaser.GameObjects.Container {
           }
         }
       });
-
-      upgradeButton.on("pointerout", () => {
-        if (
-          upgradeButton.getElement("text").text !==
-          "Prayer Automation Activated"
-        ) {
-          upgradeButton.getElement("background").setFillStyle(0xf4c6c6);
-          upgradeButton.getElement("text").setBackgroundColor("#F4C6C6");
-          upgradeButton.getElement("background").setStrokeStyle();
-          upgradeButton.getElement("text").setText(upgrade.name);
-          upgradeButton.getElement("background").resize(200, 50);
-          upgradeButton.getElement("text").setOrigin(0);
-        }
-      });
+    });
+  }
+  resetUpgradeButtons() {
+    const upgrades = this.getCurrentPhaseUpgrades();
+    upgrades.forEach((upgrade) => {
+      upgrade.active = false;
     });
   }
 }

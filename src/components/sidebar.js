@@ -325,14 +325,23 @@ ${upgrade.description}`);
 
       // Add functionality to activate the upgrades here
 
+      // Logic for activating the Prayer Efficiency upgrade
+      // upgradeButton.on("pointerdown", () => {
+      //   if (
+      //     upgrade.name === "Prayer Efficiency" &&
+      //     this.scene.totalFaith >= 50 &&
+      //     !upgrade.active
+      //   )
+      //     upgrade.active = true;
+      // });
+
       // Logic for activating the Prayer Automation upgrade
       upgradeButton.on("pointerdown", () => {
         if (
           upgrade.name === "Prayer Automation" &&
           this.scene.totalFaith >= 20 &&
-          !this.prayerAutomationUnlocked
+          !upgrade.active
         ) {
-          this.prayerAutomationUnlocked = true;
           upgrade.active = true;
           this.scene.totalFaith -= 20;
           this.topbar.updateFaithLabel(this.scene.totalFaith);
@@ -348,7 +357,7 @@ ${upgrade.description}`);
             this.scene.passiveFaithEvent = this.scene.time.addEvent({
               delay: 500, // .5 seconds
               callback: () => {
-                if (this.prayerAutomationUnlocked) {
+                if (upgrade.active) {
                   this.scene.totalFaith++;
                   this.topbar.updateFaithLabel(this.scene.totalFaith);
                 }

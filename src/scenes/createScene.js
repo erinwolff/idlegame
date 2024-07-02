@@ -69,7 +69,10 @@ export default class CreateScene extends Phaser.Scene {
     if (this.sidebar) {
       this.sidebar.nameInput.setText("");
       this.sidebar.worshipInput.setText("");
-      this.sidebar.prayerAutomationUnlocked = false;
+      const upgrades = this.sidebar.getCurrentPhaseUpgrades();
+      upgrades.forEach((upgrade) => {
+        upgrade.active = false;
+      });
       this.sidebar.resetUpgradeButtons(); // Reset upgrade buttons
     }
 

@@ -31,15 +31,15 @@ export default class CreateScene extends Phaser.Scene {
     this.totalFaith = 0;
     this.passiveFaithEvent = false;
 
-    const acolyte = this.add.image(
+    this.acolyte = this.add.image(
       this.cameras.main.centerX,
       this.cameras.main.centerY,
       "acolyte"
     );
-    acolyte.setOrigin(0.5, 0.2);
-    acolyte.setScale(0.3);
-    acolyte.setDepth(5);
-    acolyte.setInteractive({ useHandCursor: true });
+    this.acolyte.setOrigin(0.5, 0.2);
+    this.acolyte.setScale(0.3);
+    this.acolyte.setDepth(5);
+    this.acolyte.setInteractive({ useHandCursor: true });
 
     this.topbar = new Topbar(this, 0, 20, 4000, 45, this.totalFaith);
     this.sidebar = new Sidebar(
@@ -53,7 +53,7 @@ export default class CreateScene extends Phaser.Scene {
       this.currentPhase
     );
 
-    acolyte.on("pointerdown", () => {
+    this.acolyte.on("pointerdown", () => {
       this.totalFaith += 1;
       this.topbar.updateFaithLabel(this.totalFaith);
     });

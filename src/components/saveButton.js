@@ -22,7 +22,7 @@ export function saveButton(scene, sizer) {
   });
 
   sizer.add(save, 0, "center", {
-    top: 30,
+    top: 15,
     left: 270,
     right: 10,
   });

@@ -4,6 +4,7 @@ import { getCurrentPhaseUpgrades } from "../utils/getCurrentPhaseUpgrades";
 import { saveButton } from "./saveButton";
 import { restartButton } from "./restartButton";
 import { nameInput } from "./nameInput";
+import { progressionLabel } from "./progressionLabel";
 
 export default class Sidebar extends Phaser.GameObjects.Container {
   constructor(
@@ -42,31 +43,7 @@ export default class Sidebar extends Phaser.GameObjects.Container {
     this.nameInput = nameInput(this.scene, sizer);
 
     // Label to display the player's progression path status
-    const progressionLabel = this.scene.rexUI.add.label({
-      background: this.scene.rexUI.add.roundRectangle(
-        0, // X position
-        0, // Y position
-        240, // Width
-        50, // Height
-        10, // Border radius
-        0xdd9292 // Background color
-      ),
-      width: 240,
-      height: 50,
-      text: this.scene.add.text(0, 0, "Status", {
-        fontSize: "20px",
-        color: "#000000",
-        fontFamily: "Lato",
-        backgroundColor: "#DD9292",
-      }),
-      space: { left: 10 },
-    });
-
-    sizer.add(progressionLabel, 0, "center", {
-      top: 20,
-      left: 270,
-      right: 10,
-    });
+    this.progressionLabel = progressionLabel(this.scene, sizer);
 
     // Input to display player's worship details
     this.worshipInput = this.scene.add.rexInputText(0, 0, 240, 50, {

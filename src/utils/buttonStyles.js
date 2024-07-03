@@ -1,3 +1,6 @@
+import { saveGameData } from "./saveGame";
+import { loadGameData } from "./loadGame";
+
 export function upgradeButtonPointerEvents(button, upgrade) {
   const background = button.getElement("background");
   const text = button.getElement("text");
@@ -91,7 +94,7 @@ function updateUnactivatedNameHoverStyle(background, text, upgrade) {
   text.setOrigin(0);
 }
 
-export function saveButtonPointerEvents(button) {
+export function saveButtonPointerEvents(button, scene) {
   const background = button.getElement("background");
   const text = button.getElement("text");
 
@@ -106,9 +109,20 @@ export function saveButtonPointerEvents(button) {
     text.setBackgroundColor("#64B5F6");
     background.setStrokeStyle();
   });
+  button.on("pointerdown", () => {
+    background.setFillStyle(0x64b5f6);
+    text.setBackgroundColor("#64B5F6");
+    saveGameData(scene);
+  });
 }
 
-export function loadButtonPointerEvents(button) {
+export function loadButtonPointerEvents(
+  button,
+  scene,
+  phaseUpgrades,
+  topbar,
+  upgradeButtons
+) {
   const background = button.getElement("background");
   const text = button.getElement("text");
 
@@ -119,9 +133,15 @@ export function loadButtonPointerEvents(button) {
   });
 
   button.on("pointerout", () => {
-    background.setFillStyle(0xffff99); // FFFF99
+    background.setFillStyle(0xffff99);
     text.setBackgroundColor("#FFFF99");
     background.setStrokeStyle();
+  });
+
+  button.on("pointerdown", () => {
+    background.setFillStyle(0xffff99);
+    text.setBackgroundColor("#FFFF99");
+    loadGameData(scene, phaseUpgrades, topbar, upgradeButtons);
   });
 }
 

@@ -108,6 +108,23 @@ export function saveButtonPointerEvents(button) {
   });
 }
 
+export function loadButtonPointerEvents(button) {
+  const background = button.getElement("background");
+  const text = button.getElement("text");
+
+  button.on("pointerover", () => {
+    background.setFillStyle(0xffff66);
+    text.setBackgroundColor("#FFFF66");
+    background.setStrokeStyle(1, 0xffffff);
+  });
+
+  button.on("pointerout", () => {
+    background.setFillStyle(0xffff99); // FFFF99
+    text.setBackgroundColor("#FFFF99");
+    background.setStrokeStyle();
+  });
+}
+
 export function restartButtonPointerEvents(button, resetGameFunction) {
   const background = button.getElement("background");
   const text = button.getElement("text");

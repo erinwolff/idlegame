@@ -77,10 +77,13 @@ export function upgradeButtons(scene, sizer, upgrades, topbar) {
         topbar.updateFaithLabel(scene.totalFaith);
         upgradeButtonPointerEvents(upgradeButton, upgrade);
 
-        // Start passive faith generation
-        if (!scene.passiveFaithEvent) {
-          scene.passiveFaithEvent = scene.time.addEvent({
-            delay: 500, // .5 seconds
+        // Start passive faith generation if it doesn't already exist
+        if (
+          upgrade.name === "Prayer Automation" &&
+          !scene.prayerAutomationFaithEvent
+        ) {
+          scene.prayerAutomationFaithEvent = scene.time.addEvent({
+            delay: 1000, // 1 seconds
             callback: () => {
               if (upgrade.active) {
                 scene.totalFaith++;
@@ -106,25 +109,11 @@ export function upgradeButtons(scene, sizer, upgrades, topbar) {
         upgradeButtonPointerEvents(upgradeButton, upgrade);
 
         // Temporary Passive Faith Boost Logic
-        // If the passive faith generation event is already active, increase the rate for 1 minute
-        if (upgrade.name === "Basic Rituals" && scene.passiveFaithEvent) {
-          const originalDelay = scene.passiveFaithEvent.delay;
-
-          // Increase passive faith generation rate
-          scene.passiveFaithEvent.delay *= 0.05; // 20 times faster
-
-          // Reset to original delay after 1 minute & reset to original button state
-          scene.time.delayedCall(60000, () => {
-            scene.passiveFaithEvent.delay = originalDelay;
-            upgrade.active = false;
-            upgradeButtonStyleUpdate(upgradeButton, upgrade);
-          });
-        }
         // If the passive faith generation event is not active, start it at the increased rate for 1 minute
-        else if (upgrade.name === "Basic Rituals" && !scene.passiveFaithEvent) {
+        if (upgrade.name === "Basic Rituals" && !scene.basicRitualsFaithEvent) {
           // Start passive faith generation temporarily at the increased rate
-          scene.passiveFaithEvent = scene.time.addEvent({
-            delay: 50, // .05 seconds or 20 times faster
+          scene.basicRitualsFaithEvent = scene.time.addEvent({
+            delay: 50, // .05 seconds
             callback: () => {
               scene.totalFaith++;
               topbar.updateFaithLabel(scene.totalFaith);
@@ -134,8 +123,8 @@ export function upgradeButtons(scene, sizer, upgrades, topbar) {
 
           // Stop passive faith generation after 1 minute & reset to original button state
           scene.time.delayedCall(60000, () => {
-            scene.passiveFaithEvent.remove();
-            scene.passiveFaithEvent = null;
+            scene.basicRitualsFaithEvent.remove();
+            scene.basicRitualsFaithEvent = null;
             upgrade.active = false;
             upgradeButtonStyleUpdate(upgradeButton, upgrade);
           });
@@ -144,5 +133,38 @@ export function upgradeButtons(scene, sizer, upgrades, topbar) {
     });
 
     // Logic for activating the Recruit Followers upgrade
+    upgradeButton.on("pointerdown", () => {
+      if (
+        upgrade.name === "Recruit Followers" &&
+        scene.totalFaith >= 300 &&
+        !upgrade.active
+      ) {
+        upgrade.active = true;
+        scene.totalFaith -= 300;
+        topbar.updateFaithLabel(scene.totalFaith);
+        upgradeButtonPointerEvents(upgradeButton, upgrade);
+
+        // Increase the total number of followers by 50
+        scene.totalFollowers += 50;
+        // Update the total followers label
+        topbar.updateFollowersLabel(scene.totalFollowers);
+        // Increase the faith generation by 50 (1 faith per follower)
+        if (
+          upgrade.name === "Recruit Followers" &&
+          !scene.recruitFollowersFaithEvent
+        ) {
+          scene.recruitFollowersFaithEvent = scene.time.addEvent({
+            delay: 1000, // 1 second
+            callback: () => {
+              if (upgrade.active) {
+                scene.totalFaith += 50;
+                topbar.updateFaithLabel(scene.totalFaith);
+              }
+            },
+            loop: true,
+          });
+        }
+      }
+    });
   });
 }

@@ -1,6 +1,6 @@
 import { loadButtonPointerEvents } from "../utils/buttonStyles";
 
-export function loadButton(scene, sizer) {
+export function loadButton(scene, sizer, upgrades, topbar, upgradeButtons) {
   const load = scene.rexUI.add.label({
     background: scene.rexUI.add.roundRectangle(
       0, // X position
@@ -29,7 +29,7 @@ export function loadButton(scene, sizer) {
 
   load.setInteractive({ useHandCursor: true });
 
-  loadButtonPointerEvents(load);
+  loadButtonPointerEvents(load, scene, upgrades, topbar, upgradeButtons);
 
   return load;
 }

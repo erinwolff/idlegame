@@ -3,27 +3,27 @@
 const initiateUpgrades = [
   {
     name: "Prayer Efficiency",
-    description: "Increases the amount of faith generated per prayer.",
+    description: "Generate 2 faith per manual prayer.",
     cost: 50,
     active: false,
   },
   {
     name: "Prayer Automation",
-    description: `Allows prayers to be performed automatically.`,
+    description: `Begins passive faith generation, 1 faith per second.`,
     cost: 20,
     active: false,
   },
   {
     name: "Basic Rituals",
     description:
-      "Perform simple rituals and boost faith generation for a limited time.",
+      "Perform a simple ritual and boost faith generation for 1 minute.",
     cost: 200,
     active: false,
   },
   {
     name: "Recruit Followers",
-    description: "Recruit a number of followers who passively generate faith.",
-    cost: 100,
+    description: "Recruit 50 followers who each passively generate 1 faith.",
+    cost: 300,
     active: false,
   },
 ];

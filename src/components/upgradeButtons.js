@@ -4,6 +4,8 @@ import {
 } from "../utils/buttonStyles";
 
 export function upgradeButtons(scene, sizer, upgrades, topbar) {
+  const buttons = [];
+
   upgrades.forEach((upgrade) => {
     const upgradeButton = scene.rexUI.add.label({
       background: scene.rexUI.add.roundRectangle(
@@ -34,6 +36,9 @@ export function upgradeButtons(scene, sizer, upgrades, topbar) {
     });
 
     upgradeButton.setInteractive({ useHandCursor: true });
+
+    // Store each button to be able to reference later
+    buttons.push(upgradeButton);
 
     // Update the style of the upgrade button based on pointerover/pointerout events
     upgradeButtonPointerEvents(upgradeButton, upgrade);
@@ -167,4 +172,5 @@ export function upgradeButtons(scene, sizer, upgrades, topbar) {
       }
     });
   });
+  return buttons;
 }

@@ -3,6 +3,7 @@ import { upgradeButtons } from "./upgradeButtons";
 import { getCurrentPhaseUpgrades } from "../utils/getCurrentPhaseUpgrades";
 import { saveButton } from "./saveButton";
 import { restartButton } from "./restartButton";
+import { nameInput } from "./nameInput";
 
 export default class Sidebar extends Phaser.GameObjects.Container {
   constructor(
@@ -38,25 +39,7 @@ export default class Sidebar extends Phaser.GameObjects.Container {
     this.currentPhase = currentPhase;
 
     // Input text box for the player to name their priest
-    this.nameInput = this.scene.add.rexInputText(0, 0, 240, 50, {
-      type: "text",
-      placeholder: "Name Your Acolyte",
-      fontSize: "20px",
-      color: "#000000",
-      backgroundColor: "#DD9292",
-      fontFamily: "Lato",
-      borderRadius: "10px",
-      maxLength: 20,
-      paddingLeft: "10px",
-      tooltip: "Your acolyte's name",
-      autoComplete: "off",
-    });
-
-    sizer.add(this.nameInput, 0, "center", {
-      top: 1040,
-      left: 270,
-      right: 10,
-    });
+    this.nameInput = nameInput(this.scene, sizer);
 
     // Label to display the player's progression path status
     const progressionLabel = this.scene.rexUI.add.label({

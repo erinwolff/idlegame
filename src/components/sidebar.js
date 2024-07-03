@@ -6,6 +6,7 @@ import { restartButton } from "./restartButton";
 import { nameInput } from "./nameInput";
 import { progressionLabel } from "./progressionLabel";
 import { worshipInput } from "./worshipInput";
+import { upgradesLabel } from "./upgradesLabel";
 
 export default class Sidebar extends Phaser.GameObjects.Container {
   constructor(
@@ -50,31 +51,7 @@ export default class Sidebar extends Phaser.GameObjects.Container {
     this.worshipInput = worshipInput(this.scene, sizer);
 
     // Label to display player's available upgrades
-    const upgradesLabel = this.scene.rexUI.add.label({
-      background: this.scene.rexUI.add.roundRectangle(
-        0,
-        0,
-        240,
-        50,
-        10,
-        0xdd9292
-      ),
-      width: 240,
-      height: 50,
-      text: this.scene.add.text(0, 0, "Upgrades", {
-        fontSize: "20px",
-        color: "#000000",
-        fontFamily: "Lato",
-        backgroundColor: "#DD9292",
-      }),
-      space: { left: 10 },
-    });
-
-    sizer.add(upgradesLabel, 0, "center", {
-      top: 20,
-      left: 270,
-      right: 10,
-    });
+    this.upgradesLabel = upgradesLabel(this.scene, sizer);
 
     // Dynamically create upgrade buttons based on the player's current phase
     this.upgrades = getCurrentPhaseUpgrades(this.currentPhase);

@@ -1,14 +1,6 @@
 import "phaser3-rex-plugins/templates/ui/ui-plugin.js";
-import {
-  initiateUpgrades,
-  priestessUpgrades,
-  highPriestessUpgrades,
-  oracleUpgrades,
-  saintUpgrades,
-  demigodUpgrades,
-  goddessUpgrades,
-} from "../constants/upgrades";
 import { createUpgradeButtons } from "../utils/createUpgradeButtons";
+import { getCurrentPhaseUpgrades } from "../utils/getCurrentPhaseUpgrades";
 
 export default class Sidebar extends Phaser.GameObjects.Container {
   constructor(
@@ -140,7 +132,7 @@ export default class Sidebar extends Phaser.GameObjects.Container {
     });
 
     // Dynamically create upgrade buttons based on the player's current phase
-    const upgrades = this.getCurrentPhaseUpgrades();
+    const upgrades = getCurrentPhaseUpgrades(this.currentPhase);
     createUpgradeButtons(this.scene, sizer, upgrades, this.topbar);
 
     // Button for player to save the game
@@ -226,34 +218,9 @@ export default class Sidebar extends Phaser.GameObjects.Container {
 
     sizer.layout();
   }
-  getCurrentPhaseUpgrades() {
-    if (this.currentPhase === "initiate") {
-      return initiateUpgrades;
-    }
-    if (this.currentPhase === "priestess") {
-      return priestessUpgrades;
-    }
-    if (this.currentPhase === "highPriestess") {
-      return highPriestessUpgrades;
-    }
-    if (this.currentPhase === "oracle") {
-      return oracleUpgrades;
-    }
-    if (this.currentPhase === "saint") {
-      return saintUpgrades;
-    }
-    if (this.currentPhase === "demigod") {
-      return demigodUpgrades;
-    }
-    if (this.currentPhase === "goddess") {
-      return goddessUpgrades;
-    } else {
-      return [];
-    }
-  }
 
   resetUpgradeButtons() {
-    const upgrades = this.getCurrentPhaseUpgrades();
+    const upgrades = getCurrentPhaseUpgrades(this.currentPhase);
     upgrades.forEach((upgrade) => {
       upgrade.active = false;
     });

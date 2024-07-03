@@ -1,4 +1,4 @@
-export function pointerEventStyleUpdates(button, upgrade) {
+export function upgradeButtonPointerEvents(button, upgrade) {
   const background = button.getElement("background");
   const text = button.getElement("text");
 
@@ -7,15 +7,10 @@ export function pointerEventStyleUpdates(button, upgrade) {
   button.off("pointerout");
 
   // Style for activated upgrades
-  if (upgrade.active) {
+  if (upgrade.active === true) {
+    updateActivatedDescriptionStyle(background, text, upgrade);
     button.on("pointerover", () => {
-      background.setFillStyle(0x8bc34a);
-      text.setBackgroundColor("#8BC34A");
-      text.setText(`${upgrade.description}`);
-      background.setStrokeStyle(1, 0xffffff);
-      text.setWordWrapWidth(220);
-      background.resize(240, 80);
-      text.setOrigin(0.05, 0.4);
+      updateActivatedDescriptionStyle(background, text, upgrade);
     });
 
     button.on("pointerout", () => {
@@ -24,13 +19,7 @@ export function pointerEventStyleUpdates(button, upgrade) {
   } else {
     // Style for unactivated upgrades
     button.on("pointerover", () => {
-      background.setFillStyle(0xf4c6c6);
-      text.setBackgroundColor("#F4C6C6");
-      background.setStrokeStyle(1, 0xffffff);
-      text.setText(`Cost: ${upgrade.cost}\n${upgrade.description}`);
-      text.setWordWrapWidth(220);
-      background.resize(240, 80);
-      text.setOrigin(0.05, 0.4);
+      updateUnactivatedDescriptionHoverStyle(background, text, upgrade);
     });
 
     button.on("pointerout", () => {
@@ -45,39 +34,59 @@ export function upgradeButtonStyleUpdate(button, upgrade) {
 
   if (upgrade.active === true) {
     // Style for activated upgrades
-    background.setFillStyle(0x8bc34a);
-    text.setBackgroundColor("#8BC34A");
-    text.setText(`${upgrade.name} Activated`);
-    background.setStrokeStyle();
-    text.setWordWrapWidth(200);
-    background.resize(220, 55);
-    text.setOrigin(0.05, 0.3);
+    updateActivatedNameStyle(background, text, upgrade);
     button.on("pointerover", () => {
-      background.setFillStyle(0x8bc34a);
-      text.setBackgroundColor("#8BC34A");
-      text.setText(`${upgrade.description}`);
-      background.setStrokeStyle(1, 0xffffff);
-      text.setWordWrapWidth(220);
-      background.resize(240, 80);
-      text.setOrigin(0.05, 0.4);
+      updateActivatedDescriptionStyle(background, text, upgrade);
     });
   } else {
     // Style for unactivated upgrades (or pointerout events)
-    background.setFillStyle(0xf4c6c6);
-    text.setBackgroundColor("#F4C6C6");
-    text.setText(upgrade.name);
-    background.setStrokeStyle();
-    text.setWordWrapWidth(190);
-    background.resize(200, 50);
-    text.setOrigin(0);
+    updateUnactivatedNameHoverStyle(background, text, upgrade);
     button.on("pointerover", () => {
-      background.setFillStyle(0xf4c6c6);
-      text.setBackgroundColor("#F4C6C6");
-      background.setStrokeStyle(1, 0xffffff);
-      text.setText(`Cost: ${upgrade.cost}\n${upgrade.description}`);
-      text.setWordWrapWidth(220);
-      background.resize(240, 80);
-      text.setOrigin(0.05, 0.4);
+      updateUnactivatedDescriptionHoverStyle(background, text, upgrade);
     });
   }
+}
+
+// Helper function to consolidate activated upgrade name style updates
+function updateActivatedNameStyle(background, text, upgrade) {
+  background.setFillStyle(0x8bc34a);
+  text.setBackgroundColor("#8BC34A");
+  text.setText(`${upgrade.name} Activated`);
+  background.setStrokeStyle();
+  text.setWordWrapWidth(200);
+  background.resize(220, 55);
+  text.setOrigin(0.05, 0.3);
+}
+
+// Helper function to consolidate activated description style updates
+function updateActivatedDescriptionStyle(background, text, upgrade) {
+  background.setFillStyle(0x8bc34a);
+  text.setBackgroundColor("#8BC34A");
+  text.setText(`${upgrade.description}`);
+  background.setStrokeStyle(1, 0xffffff);
+  text.setWordWrapWidth(220);
+  background.resize(240, 80);
+  text.setOrigin(0.05, 0.4);
+}
+
+// Helper function to consolidate unactivated description style updates
+function updateUnactivatedDescriptionHoverStyle(background, text, upgrade) {
+  background.setFillStyle(0xf4c6c6);
+  text.setBackgroundColor("#F4C6C6");
+  background.setStrokeStyle(1, 0xffffff);
+  text.setText(`Cost: ${upgrade.cost}\n${upgrade.description}`);
+  text.setWordWrapWidth(220);
+  background.resize(240, 80);
+  text.setOrigin(0.05, 0.4);
+}
+
+// Helper function to consolidate unactivated name style updates
+function updateUnactivatedNameHoverStyle(background, text, upgrade) {
+  background.setFillStyle(0xf4c6c6);
+  text.setBackgroundColor("#F4C6C6");
+  text.setText(upgrade.name);
+  background.setStrokeStyle();
+  text.setWordWrapWidth(190);
+  background.resize(200, 50);
+  text.setOrigin(0);
 }

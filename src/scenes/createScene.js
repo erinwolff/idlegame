@@ -70,7 +70,7 @@ export default class CreateScene extends Phaser.Scene {
 
     if (this.sidebar) {
       this.nameInput;
-      this.sidebar.worshipInput.setText("");
+      this.worshipInput;
       const upgrades = getCurrentPhaseUpgrades(this.currentPhase);
       upgrades.forEach((upgrade) => {
         upgrade.active = false;

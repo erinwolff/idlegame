@@ -5,6 +5,7 @@ import { saveButton } from "./saveButton";
 import { restartButton } from "./restartButton";
 import { nameInput } from "./nameInput";
 import { progressionLabel } from "./progressionLabel";
+import { worshipInput } from "./worshipInput";
 
 export default class Sidebar extends Phaser.GameObjects.Container {
   constructor(
@@ -46,25 +47,7 @@ export default class Sidebar extends Phaser.GameObjects.Container {
     this.progressionLabel = progressionLabel(this.scene, sizer);
 
     // Input to display player's worship details
-    this.worshipInput = this.scene.add.rexInputText(0, 0, 240, 50, {
-      type: "text",
-      placeholder: "Choose Your Worship",
-      fontSize: "20px",
-      color: "#000000",
-      backgroundColor: "#DD9292",
-      fontFamily: "Lato",
-      borderRadius: "10px",
-      maxLength: 20,
-      paddingLeft: "10px",
-      tooltip: "Your choice of worship",
-      autoComplete: "off",
-    });
-
-    sizer.add(this.worshipInput, 0, "center", {
-      top: 20,
-      left: 270,
-      right: 10,
-    });
+    this.worshipInput = worshipInput(this.scene, sizer);
 
     // Label to display player's available upgrades
     const upgradesLabel = this.scene.rexUI.add.label({

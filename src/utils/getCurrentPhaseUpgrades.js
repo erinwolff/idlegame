@@ -9,25 +9,25 @@ import {
 } from "../constants/upgrades";
 
 export function getCurrentPhaseUpgrades(currentPhase) {
-  if (currentPhase === "initiate") {
+  if (currentPhase === "Initiate") {
     return initiateUpgrades;
   }
-  if (currentPhase === "priestess") {
+  if (currentPhase === "Priestess") {
     return priestessUpgrades;
   }
-  if (currentPhase === "highPriestess") {
+  if (currentPhase === "High Priestess") {
     return highPriestessUpgrades;
   }
-  if (currentPhase === "oracle") {
+  if (currentPhase === "Oracle") {
     return oracleUpgrades;
   }
-  if (currentPhase === "saint") {
+  if (currentPhase === "Saint") {
     return saintUpgrades;
   }
-  if (currentPhase === "demigod") {
+  if (currentPhase === "Demigod") {
     return demigodUpgrades;
   }
-  if (currentPhase === "goddess") {
+  if (currentPhase === "Goddess") {
     return goddessUpgrades;
   } else {
     return [];

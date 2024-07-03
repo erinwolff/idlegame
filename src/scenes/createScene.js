@@ -17,7 +17,7 @@ export default class CreateScene extends Phaser.Scene {
       this.cameras.main.height /
       this.textures.get("acolyteBackground").getSourceImage().height;
 
-    this.currentPhase = "initiate"; // Game begins in the initiate phase
+    this.currentPhase = "Initiate"; // Game begins in the initiate phase
 
     this.add
       .image(
@@ -74,7 +74,7 @@ export default class CreateScene extends Phaser.Scene {
   resetGame() {
     this.totalFaith = 0;
     this.totalFollowers = 0;
-    this.currentPhase = "initiate";
+    this.currentPhase = "Initiate";
     if (this.topbar) {
       // Check if the topbar exists before updating it
       this.topbar.updateFaithLabel(this.totalFaith);

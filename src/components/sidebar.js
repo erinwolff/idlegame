@@ -56,10 +56,21 @@ export default class Sidebar extends Phaser.GameObjects.Container {
 
     // Dynamically create upgrade buttons based on the player's current phase
     this.upgrades = getCurrentPhaseUpgrades(this.currentPhase);
-    upgradeButtons(this.scene, sizer, this.upgrades, this.topbar);
+    this.upgradeButtons = upgradeButtons(
+      this.scene,
+      sizer,
+      this.upgrades,
+      this.topbar
+    );
 
     // Button for player to load a saved game
-    this.load = loadButton(this.scene, sizer);
+    this.load = loadButton(
+      this.scene,
+      sizer,
+      this.upgrades,
+      this.topbar,
+      this.upgradeButtons
+    );
 
     // Button for player to save the game
     this.save = saveButton(this.scene, sizer);

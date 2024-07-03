@@ -29,7 +29,7 @@ export function saveButton(scene, sizer) {
 
   save.setInteractive({ useHandCursor: true });
 
-  saveButtonPointerEvents(save);
+  saveButtonPointerEvents(save, scene);
 
   return save;
 }

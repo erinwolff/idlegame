@@ -1,5 +1,6 @@
 import Sidebar from "../components/sidebar";
 import Topbar from "../components/topbar";
+import { getCurrentPhaseUpgrades } from "../utils/getCurrentPhaseUpgrades";
 
 export default class CreateScene extends Phaser.Scene {
   constructor() {
@@ -69,7 +70,7 @@ export default class CreateScene extends Phaser.Scene {
     if (this.sidebar) {
       this.sidebar.nameInput.setText("");
       this.sidebar.worshipInput.setText("");
-      const upgrades = this.sidebar.getCurrentPhaseUpgrades();
+      const upgrades = getCurrentPhaseUpgrades(this.currentPhase);
       upgrades.forEach((upgrade) => {
         upgrade.active = false;
       });

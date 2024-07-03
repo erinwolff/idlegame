@@ -20,6 +20,19 @@ export function loadGameData(scene, upgrades, topbar, upgradeButtons) {
           upgrade.active = true;
           upgradeButtonStyleUpdate(upgradeButtons[index], upgrade); // Update button style
 
+          // Restart Prayer Efficiency upgrade
+          if (upgrade.name === "Prayer Efficiency") {
+            scene.acolyte.off("pointerdown");
+            scene.acolyte.on("pointerdown", () => {
+              if (upgrade.active === true) {
+                scene.totalFaith += 2;
+              } else {
+                scene.totalFaith += 1;
+              }
+              topbar.updateFaithLabel(scene.totalFaith);
+            });
+          }
+
           // Restart passive faith generation if needed
           if (upgrade.name === "Prayer Automation") {
             // restart prayerAutomationFaithEvent

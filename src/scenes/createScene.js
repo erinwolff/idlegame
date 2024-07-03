@@ -31,7 +31,10 @@ export default class CreateScene extends Phaser.Scene {
     this.input.enabled = true;
 
     this.totalFaith = 0;
-    this.passiveFaithEvent = false;
+    this.prayerAutomationFaithEvent = false; // passiveFaithEvent
+    this.recruitFollowersFaithEvent = false;
+    this.basicRitualsFaithEvent = false;
+    this.totalFollowers = 0;
 
     this.acolyte = this.add.image(
       this.cameras.main.centerX,
@@ -43,7 +46,15 @@ export default class CreateScene extends Phaser.Scene {
     this.acolyte.setDepth(5);
     this.acolyte.setInteractive({ useHandCursor: true });
 
-    this.topbar = new Topbar(this, 0, 20, 4000, 45, this.totalFaith);
+    this.topbar = new Topbar(
+      this,
+      0,
+      20,
+      4000,
+      45,
+      this.totalFaith,
+      this.totalFollowers
+    );
     this.sidebar = new Sidebar(
       this,
       0,
@@ -62,10 +73,12 @@ export default class CreateScene extends Phaser.Scene {
   }
   resetGame() {
     this.totalFaith = 0;
+    this.totalFollowers = 0;
     this.currentPhase = "initiate";
     if (this.topbar) {
       // Check if the topbar exists before updating it
       this.topbar.updateFaithLabel(this.totalFaith);
+      this.topbar.updateFollowersLabel(this.totalFollowers);
     }
 
     if (this.sidebar) {
@@ -78,10 +91,18 @@ export default class CreateScene extends Phaser.Scene {
       resetUpgradeButtons(this.currentPhase); // Reset upgrade buttons
     }
 
-    // Stop the passive faith generation loop if it exists
-    if (this.passiveFaithEvent) {
-      this.passiveFaithEvent.destroy();
-      this.passiveFaithEvent = false;
+    // Stop the passive faith generation loops if they exist
+    if (this.prayerAutomationFaithEvent) {
+      this.prayerAutomationFaithEvent.destroy();
+      this.prayerAutomationFaithEvent = false;
+    }
+    if (this.recruitFollowersFaithEvent) {
+      this.recruitFollowersFaithEvent.destroy();
+      this.recruitFollowersFaithEvent = false;
+    }
+    if (this.basicRitualsFaithEvent) {
+      this.basicRitualsFaithEvent.destroy();
+      this.basicRitualsFaithEvent = false;
     }
 
     this.scene.restart();

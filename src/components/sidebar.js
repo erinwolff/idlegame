@@ -8,6 +8,7 @@ import { progressionLabel } from "./progressionLabel";
 import { worshipInput } from "./worshipInput";
 import { upgradesLabel } from "./upgradesLabel";
 import { loadButton } from "./loadButton";
+import { currentPhaseLabel } from "./currentPhaseLabel";
 
 export default class Sidebar extends Phaser.GameObjects.Container {
   constructor(
@@ -47,6 +48,13 @@ export default class Sidebar extends Phaser.GameObjects.Container {
 
     // Label to display the player's progression path status
     this.progressionLabel = progressionLabel(this.scene, sizer);
+
+    // Dynamic label to display the player's currentPhase
+    this.currentPhaseLabel = currentPhaseLabel(
+      this.scene,
+      sizer,
+      this.currentPhase
+    );
 
     // Input to display player's worship details
     this.worshipInput = worshipInput(this.scene, sizer);

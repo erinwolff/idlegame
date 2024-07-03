@@ -218,11 +218,4 @@ export default class Sidebar extends Phaser.GameObjects.Container {
 
     sizer.layout();
   }
-
-  resetUpgradeButtons() {
-    const upgrades = getCurrentPhaseUpgrades(this.currentPhase);
-    upgrades.forEach((upgrade) => {
-      upgrade.active = false;
-    });
-  }
 }

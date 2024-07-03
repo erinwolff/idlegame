@@ -1,6 +1,7 @@
 import Sidebar from "../components/sidebar";
 import Topbar from "../components/topbar";
 import { getCurrentPhaseUpgrades } from "../utils/getCurrentPhaseUpgrades";
+import { resetUpgradeButtons } from "../utils/resetUpgradeButtons";
 
 export default class CreateScene extends Phaser.Scene {
   constructor() {
@@ -74,7 +75,7 @@ export default class CreateScene extends Phaser.Scene {
       upgrades.forEach((upgrade) => {
         upgrade.active = false;
       });
-      this.sidebar.resetUpgradeButtons(); // Reset upgrade buttons
+      resetUpgradeButtons(this.currentPhase); // Reset upgrade buttons
     }
 
     // Stop the passive faith generation loop if it exists

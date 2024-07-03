@@ -1,5 +1,5 @@
 import "phaser3-rex-plugins/templates/ui/ui-plugin.js";
-import { createUpgradeButtons } from "../utils/createUpgradeButtons";
+import { upgradeButtons } from "./upgradeButtons";
 import { getCurrentPhaseUpgrades } from "../utils/getCurrentPhaseUpgrades";
 
 export default class Sidebar extends Phaser.GameObjects.Container {
@@ -104,7 +104,7 @@ export default class Sidebar extends Phaser.GameObjects.Container {
       right: 10,
     });
 
-    // Input to display player's available upgrades
+    // Label to display player's available upgrades
     const upgradesLabel = this.scene.rexUI.add.label({
       background: this.scene.rexUI.add.roundRectangle(
         0,
@@ -133,7 +133,7 @@ export default class Sidebar extends Phaser.GameObjects.Container {
 
     // Dynamically create upgrade buttons based on the player's current phase
     const upgrades = getCurrentPhaseUpgrades(this.currentPhase);
-    createUpgradeButtons(this.scene, sizer, upgrades, this.topbar);
+    upgradeButtons(this.scene, sizer, upgrades, this.topbar);
 
     // Button for player to save the game
     const saveButton = this.scene.rexUI.add.label({

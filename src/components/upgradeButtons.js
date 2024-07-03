@@ -1,9 +1,9 @@
 import {
   upgradeButtonPointerEvents,
   upgradeButtonStyleUpdate,
-} from "./buttonStyles";
+} from "../utils/buttonStyles";
 
-export function createUpgradeButtons(scene, sizer, upgrades, topbar) {
+export function upgradeButtons(scene, sizer, upgrades, topbar) {
   upgrades.forEach((upgrade) => {
     const upgradeButton = scene.rexUI.add.label({
       background: scene.rexUI.add.roundRectangle(

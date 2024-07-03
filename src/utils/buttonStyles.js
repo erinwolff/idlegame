@@ -19,7 +19,7 @@ export function pointerEventStyleUpdates(button, upgrade) {
     });
 
     button.on("pointerout", () => {
-      upgradeButtonStyleUpdates(button, upgrade);
+      upgradeButtonStyleUpdate(button, upgrade);
     });
   } else {
     // Style for unactivated upgrades

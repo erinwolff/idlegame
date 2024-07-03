@@ -1,6 +1,8 @@
 import "phaser3-rex-plugins/templates/ui/ui-plugin.js";
 import { upgradeButtons } from "./upgradeButtons";
 import { getCurrentPhaseUpgrades } from "../utils/getCurrentPhaseUpgrades";
+import { saveButton } from "./saveButton";
+import { restartButton } from "./restartButton";
 
 export default class Sidebar extends Phaser.GameObjects.Container {
   constructor(
@@ -136,85 +138,10 @@ export default class Sidebar extends Phaser.GameObjects.Container {
     upgradeButtons(this.scene, sizer, upgrades, this.topbar);
 
     // Button for player to save the game
-    const saveButton = this.scene.rexUI.add.label({
-      background: this.scene.rexUI.add.roundRectangle(
-        0, // X position
-        0, // Y position
-        240, // Width
-        50, // Height
-        10, // Border radius
-        0x64b5f6 // Background color
-      ),
-      width: 240,
-      height: 50,
-      text: this.scene.add.text(0, 0, "Save Game", {
-        fontSize: "20px",
-        color: "#000000",
-        fontFamily: "Lato",
-        backgroundColor: "#64B5F6",
-      }),
-      space: { left: 10 },
-    });
-
-    sizer.add(saveButton, 0, "center", {
-      top: 30,
-      left: 270,
-      right: 10,
-    });
+    this.save = saveButton(this.scene, sizer);
 
     // Button for player to restart the game
-    const restartButton = this.scene.rexUI.add.label({
-      background: this.scene.rexUI.add.roundRectangle(
-        0, // X position
-        0, // Y position
-        240, // Width
-        50, // Height
-        10, // Border radius
-        0xdd9292 // Background color
-      ),
-      width: 240,
-      height: 50,
-      text: this.scene.add.text(0, 0, "Restart Game", {
-        fontSize: "20px",
-        color: "#000000",
-        fontFamily: "Lato",
-        backgroundColor: "#DD9292",
-      }),
-      space: { left: 10 },
-    });
-
-    sizer.add(restartButton, 0, "center", {
-      top: 15,
-      left: 270,
-      right: 10,
-    });
-
-    saveButton.setInteractive({ useHandCursor: true });
-    saveButton.on("pointerover", () => {
-      saveButton.getElement("background").setFillStyle(0x2196f3);
-      saveButton.getElement("text").setBackgroundColor("#2196F3");
-      saveButton.getElement("background").setStrokeStyle(1, 0xffffff);
-    });
-    saveButton.on("pointerout", () => {
-      saveButton.getElement("background").setFillStyle(0x64b5f6);
-      saveButton.getElement("text").setBackgroundColor("#64B5F6");
-      saveButton.getElement("background").setStrokeStyle();
-    });
-
-    restartButton.setInteractive({ useHandCursor: true });
-    restartButton.on("pointerover", () => {
-      restartButton.getElement("background").setFillStyle(0xf30103);
-      restartButton.getElement("text").setBackgroundColor("#F30103");
-      restartButton.getElement("background").setStrokeStyle(1, 0xffffff);
-    });
-    restartButton.on("pointerout", () => {
-      restartButton.getElement("background").setFillStyle(0xdd9292);
-      restartButton.getElement("text").setBackgroundColor("#DD9292");
-      restartButton.getElement("background").setStrokeStyle();
-    });
-    restartButton.on("pointerdown", () => {
-      this.resetGameFunction();
-    });
+    this.restart = restartButton(this.scene, sizer, resetGameFunction);
 
     sizer.layout();
   }

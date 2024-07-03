@@ -90,3 +90,38 @@ function updateUnactivatedNameHoverStyle(background, text, upgrade) {
   background.resize(200, 50);
   text.setOrigin(0);
 }
+
+export function saveButtonPointerEvents(button) {
+  const background = button.getElement("background");
+  const text = button.getElement("text");
+
+  button.on("pointerover", () => {
+    background.setFillStyle(0x2196f3);
+    text.setBackgroundColor("#2196F3");
+    background.setStrokeStyle(1, 0xffffff);
+  });
+
+  button.on("pointerout", () => {
+    background.setFillStyle(0x64b5f6);
+    text.setBackgroundColor("#64B5F6");
+    background.setStrokeStyle();
+  });
+}
+
+export function restartButtonPointerEvents(button, resetGameFunction) {
+  const background = button.getElement("background");
+  const text = button.getElement("text");
+  button.on("pointerover", () => {
+    background.setFillStyle(0xf30103);
+    text.setBackgroundColor("#F30103");
+    background.setStrokeStyle(1, 0xffffff);
+  });
+  button.on("pointerout", () => {
+    background.setFillStyle(0xdd9292);
+    text.setBackgroundColor("#DD9292");
+    background.setStrokeStyle();
+  });
+  button.on("pointerdown", () => {
+    resetGameFunction();
+  });
+}

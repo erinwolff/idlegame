@@ -1,7 +1,7 @@
 import "phaser3-rex-plugins/templates/ui/ui-plugin.js";
 
 export default class Topbar extends Phaser.GameObjects.Container {
-  constructor(scene, x, y, width, height, initialFaith) {
+  constructor(scene, x, y, width, height, initialFaith, initialFollowers) {
     super(scene, x, y);
     this.scene = scene;
 
@@ -22,7 +22,7 @@ export default class Topbar extends Phaser.GameObjects.Container {
     this.followersTotalDisplay = this.scene.add.rexBBCodeText(
       0,
       0,
-      "Number of Followers",
+      `Followers: ${initialFollowers}`,
       {
         fontSize: "20px",
         color: "#000000",
@@ -76,5 +76,8 @@ export default class Topbar extends Phaser.GameObjects.Container {
   }
   updateFaithLabel(newFaith) {
     this.faithCurrencyDisplay.setText(`Faith: ${newFaith}`);
+  }
+  updateFollowersLabel(newFollowers) {
+    this.followersTotalDisplay.setText(`Followers: ${newFollowers}`);
   }
 }

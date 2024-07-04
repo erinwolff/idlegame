@@ -12,5 +12,7 @@ export function getCurrentPhase(totalFaith) {
     return "Demigod";
   } else if (totalFaith <= 50000000 && totalFaith > 1000000) {
     return "Goddess";
+  } else {
+    return "";
   }
 }

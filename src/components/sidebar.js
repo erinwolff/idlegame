@@ -18,7 +18,8 @@ export default class Sidebar extends Phaser.GameObjects.Container {
     height,
     resetGameFunction,
     topbar,
-    currentPhase
+    currentPhase,
+    playerName
   ) {
     super(scene, x, y);
     this.scene = scene;
@@ -43,7 +44,7 @@ export default class Sidebar extends Phaser.GameObjects.Container {
     this.currentPhase = currentPhase;
 
     // Input text box for the player to name their priest
-    this.nameInput = nameInput(this.scene, sizer);
+    this.nameInput = nameInput(this.scene, sizer, playerName);
 
     // Dynamic label to display the player's currentPhase
     this.currentPhaseLabel = currentPhaseLabel(

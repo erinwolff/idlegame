@@ -9,6 +9,7 @@ import { nameInput } from "./nameInput";
 import { upgradesLabel } from "./upgradesLabel";
 import { loadButton } from "./loadButton";
 import { currentPhaseLabel } from "./currentPhaseLabel";
+import { getCurrentPhase } from "../utils/getCurrentPhase";
 
 export default class Sidebar extends Phaser.GameObjects.Container {
   constructor(
@@ -55,7 +56,14 @@ export default class Sidebar extends Phaser.GameObjects.Container {
       sizer,
       this.currentPhase
     );
-
+    // Timer to check the player's current phase
+    this.PhaseCheckTimer = scene.time.addEvent({
+      delay: 1000,
+      callback: this.updatePhase,
+      callbackScope: this,
+      loop: true,
+    });
+    this.currentPhase = this.updatePhase();
     // Input to display player's worship details
     // this.worshipInput = worshipInput(this.scene, sizer);
 
@@ -87,5 +95,21 @@ export default class Sidebar extends Phaser.GameObjects.Container {
     this.restart = restartButton(this.scene, sizer, resetGameFunction);
 
     sizer.layout();
+  }
+
+  // Function to update the current phase and the label
+  updatePhase() {
+    const newPhase = getCurrentPhase(this.scene.totalFaith);
+
+    if (newPhase !== this.currentPhase) {
+      this.currentPhase = newPhase;
+
+      // Update the existing label directly
+      this.currentPhaseLabel
+        .getElement("text")
+        .setText(`${this.currentPhase} Phase`);
+    }
+
+    return this.currentPhase;
   }
 }

@@ -2,6 +2,7 @@ import Sidebar from "../components/sidebar";
 import Topbar from "../components/topbar";
 import { getCurrentPhaseUpgrades } from "../utils/getCurrentPhaseUpgrades";
 import { resetUpgradeButtons } from "../utils/resetUpgradeButtons";
+import { getCurrentPhase } from "../utils/getCurrentPhase";
 
 export default class CreateScene extends Phaser.Scene {
   constructor() {
@@ -17,8 +18,7 @@ export default class CreateScene extends Phaser.Scene {
       this.cameras.main.height /
       this.textures.get("acolyteBackground").getSourceImage().height;
 
-    this.currentPhase = "Initiate"; // Game begins in the initiate phase
-
+    this.currentPhase = getCurrentPhase(this.totalFaith);
     this.add
       .image(
         this.cameras.main.centerX,
@@ -74,7 +74,7 @@ export default class CreateScene extends Phaser.Scene {
   resetGame() {
     this.totalFaith = 0;
     this.totalFollowers = 0;
-    this.currentPhase = "Initiate";
+    this.currentPhase = getCurrentPhase(this.totalFaith);
     if (this.topbar) {
       // Check if the topbar exists before updating it
       this.topbar.updateFaithLabel(this.totalFaith);

@@ -18,7 +18,6 @@ export default class CreateScene extends Phaser.Scene {
       this.cameras.main.height /
       this.textures.get("acolyteBackground").getSourceImage().height;
 
-    this.currentPhase = getCurrentPhase(this.totalFaith);
     this.add
       .image(
         this.cameras.main.centerX,
@@ -31,6 +30,7 @@ export default class CreateScene extends Phaser.Scene {
     this.input.enabled = true;
 
     this.totalFaith = 0;
+    this.currentPhase = getCurrentPhase(this.totalFaith);
     this.prayerAutomationFaithEvent = false; // passiveFaithEvent
     this.recruitFollowersFaithEvent = false;
     this.basicRitualsFaithEvent = false;

@@ -47,7 +47,7 @@ export default class Sidebar extends Phaser.GameObjects.Container {
     this.nameInput = nameInput(this.scene, sizer);
 
     // Label to display the player's progression path status
-    this.progressionLabel = progressionLabel(this.scene, sizer);
+    // this.progressionLabel = progressionLabel(this.scene, sizer);
 
     // Dynamic label to display the player's currentPhase
     this.currentPhaseLabel = currentPhaseLabel(
@@ -57,7 +57,7 @@ export default class Sidebar extends Phaser.GameObjects.Container {
     );
 
     // Input to display player's worship details
-    this.worshipInput = worshipInput(this.scene, sizer);
+    // this.worshipInput = worshipInput(this.scene, sizer);
 
     // Label to display player's available upgrades
     this.upgradesLabel = upgradesLabel(this.scene, sizer);

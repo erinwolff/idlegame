@@ -10,7 +10,7 @@ export function currentPhaseLabel(scene, sizer, currentPhase) {
     ),
     width: 200,
     height: 50,
-    text: scene.add.text(0, 0, `${currentPhase}`, {
+    text: scene.add.text(0, 0, `${currentPhase} Phase`, {
       fontSize: "18px",
       color: "#000000",
       fontFamily: "Lato",

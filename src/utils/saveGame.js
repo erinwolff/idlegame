@@ -3,7 +3,7 @@ import { getCurrentPhaseUpgrades } from "./getCurrentPhaseUpgrades";
 export function saveGameData(scene) {
   const upgrades = getCurrentPhaseUpgrades(scene.currentPhase);
   const saveData = {
-    playerName: scene.sidebar.nameInput.text,
+    playerName: scene.playerName,
     // worshipName: scene.sidebar.worshipInput.text,
     totalFollowers: scene.totalFollowers,
     totalFaith: scene.totalFaith,

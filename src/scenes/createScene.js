@@ -35,6 +35,7 @@ export default class CreateScene extends Phaser.Scene {
     this.recruitFollowersFaithEvent = false;
     this.basicRitualsFaithEvent = false;
     this.totalFollowers = 0;
+    this.playerName = "";
 
     this.acolyte = this.add.image(
       this.cameras.main.centerX,
@@ -63,14 +64,17 @@ export default class CreateScene extends Phaser.Scene {
       2000,
       this.resetGame,
       this.topbar,
-      this.currentPhase
+      this.currentPhase,
+      this.playerName
     );
 
     this.acolyte.on("pointerdown", () => {
-      this.totalFaith += 1;
+      this.totalFaith += 30000;
       this.topbar.updateFaithLabel(this.totalFaith);
+      this.playerName = this.sidebar.nameInput.text;
     });
   }
+
   resetGame() {
     this.totalFaith = 0;
     this.totalFollowers = 0;
@@ -82,7 +86,7 @@ export default class CreateScene extends Phaser.Scene {
     }
 
     if (this.sidebar) {
-      this.nameInput;
+      this.sidebar.nameInput.text = "";
       // this.worshipInput;
       const upgrades = getCurrentPhaseUpgrades(this.currentPhase);
       upgrades.forEach((upgrade) => {
@@ -106,5 +110,28 @@ export default class CreateScene extends Phaser.Scene {
     }
 
     this.scene.restart();
+  }
+  // function to listen for totalFaith updates and update the currentPhase. Update the sidebar with the new phase and reset the upgrade buttons
+  update() {
+    const newPhase = getCurrentPhase(this.totalFaith);
+    if (newPhase !== this.currentPhase) {
+      console.log("Phase changed from: ", this.currentPhase, " to: ", newPhase);
+      this.currentPhase = newPhase;
+      this.sidebar.currentPhaseLabel.text = this.currentPhase;
+      this.sidebar.upgrades = getCurrentPhaseUpgrades(this.currentPhase);
+      resetUpgradeButtons(this.currentPhase);
+      this.sidebar.destroy(true);
+      this.sidebar = new Sidebar(
+        this,
+        0,
+        0,
+        400,
+        2000,
+        this.resetGame,
+        this.topbar,
+        this.currentPhase,
+        this.playerName
+      );
+    }
   }
 }

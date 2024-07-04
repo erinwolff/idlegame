@@ -1,4 +1,4 @@
-export function nameInput(scene, sizer) {
+export function nameInput(scene, sizer, playerName) {
   const name = scene.add.rexInputText(0, 0, 240, 50, {
     type: "text",
     placeholder: "Name Your Acolyte",
@@ -11,6 +11,7 @@ export function nameInput(scene, sizer) {
     paddingLeft: "10px",
     tooltip: "Your acolyte's name",
     autoComplete: "off",
+    text: playerName,
   });
 
   sizer.add(name, 0, "center", {

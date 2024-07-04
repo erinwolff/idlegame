@@ -57,8 +57,8 @@ export default class Sidebar extends Phaser.GameObjects.Container {
       this.currentPhase
     );
     // Timer to check the player's current phase
-    this.PhaseCheckTimer = scene.time.addEvent({
-      delay: 1000,
+    this.phaseCheckTimer = scene.time.addEvent({
+      delay: 50,
       callback: this.updatePhase,
       callbackScope: this,
       loop: true,

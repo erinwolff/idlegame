@@ -4,12 +4,10 @@ import { getCurrentPhaseUpgrades } from "../utils/getCurrentPhaseUpgrades";
 import { saveButton } from "./saveButton";
 import { restartButton } from "./restartButton";
 import { nameInput } from "./nameInput";
-// import { progressionLabel } from "./progressionLabel";
 // import { worshipInput } from "./worshipInput";
 import { upgradesLabel } from "./upgradesLabel";
 import { loadButton } from "./loadButton";
 import { currentPhaseLabel } from "./currentPhaseLabel";
-import { getCurrentPhase } from "../utils/getCurrentPhase";
 
 export default class Sidebar extends Phaser.GameObjects.Container {
   constructor(
@@ -47,23 +45,13 @@ export default class Sidebar extends Phaser.GameObjects.Container {
     // Input text box for the player to name their priest
     this.nameInput = nameInput(this.scene, sizer);
 
-    // Label to display the player's progression path status
-    // this.progressionLabel = progressionLabel(this.scene, sizer);
-
     // Dynamic label to display the player's currentPhase
     this.currentPhaseLabel = currentPhaseLabel(
       this.scene,
       sizer,
       this.currentPhase
     );
-    // Timer to check the player's current phase
-    this.phaseCheckTimer = scene.time.addEvent({
-      delay: 50,
-      callback: this.updatePhase,
-      callbackScope: this,
-      loop: true,
-    });
-    this.currentPhase = this.updatePhase();
+
     // Input to display player's worship details
     // this.worshipInput = worshipInput(this.scene, sizer);
 
@@ -95,21 +83,5 @@ export default class Sidebar extends Phaser.GameObjects.Container {
     this.restart = restartButton(this.scene, sizer, resetGameFunction);
 
     sizer.layout();
-  }
-
-  // Function to update the current phase and the label
-  updatePhase() {
-    const newPhase = getCurrentPhase(this.scene.totalFaith);
-
-    if (newPhase !== this.currentPhase) {
-      this.currentPhase = newPhase;
-
-      // Update the existing label directly
-      this.currentPhaseLabel
-        .getElement("text")
-        .setText(`${this.currentPhase} Phase`);
-    }
-
-    return this.currentPhase;
   }
 }

@@ -5,9 +5,8 @@ export function loadGameData(scene, upgrades, topbar, upgradeButtons) {
   if (saveData) {
     scene.totalFollowers = saveData.totalFollowers;
     scene.totalFaith = saveData.totalFaith;
-    scene.currentPhase = saveData.currentPhase;
     // scene.sidebar.worshipInput.setText(saveData.worshipName);
-    scene.sidebar.nameInput.setText(saveData.playerName);
+    scene.playerName = saveData.playerName;
 
     // Reactivate upgrades based on saved data
     if (saveData.upgrades) {

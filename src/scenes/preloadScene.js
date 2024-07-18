@@ -1,11 +1,18 @@
+import { phaseData } from "../constants/phaseData";
+
 export default class PreloadScene extends Phaser.Scene {
   constructor() {
     super("PreloadScene");
   }
 
   preload() {
-    this.load.image("acolyte", "src/assets/acolyte.png");
-    this.load.image("acolyteBackground", "src/assets/acolyte_bg.jpeg");
+    phaseData.forEach((phase) => {
+      this.load.image(
+        phase.backgroundKey,
+        `src/assets/${phase.backgroundKey}.jpg`
+      );
+      this.load.image(phase.spritePhase, `src/assets/${phase.spritePhase}.png`);
+    });
     this.load.rexWebFont({
       google: {
         families: ["Lato"],

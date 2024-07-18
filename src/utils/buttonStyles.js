@@ -113,6 +113,7 @@ export function saveButtonPointerEvents(button, scene) {
     background.setFillStyle(0x64b5f6);
     text.setBackgroundColor("#64B5F6");
     saveGameData(scene);
+    console.log("Game saved!", scene);
   });
 }
 
@@ -142,6 +143,7 @@ export function loadButtonPointerEvents(
     background.setFillStyle(0xffff99);
     text.setBackgroundColor("#FFFF99");
     loadGameData(scene, phaseUpgrades, topbar, upgradeButtons);
+    console.log("Game loaded!", scene);
   });
 }
 

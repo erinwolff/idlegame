@@ -1,7 +1,8 @@
 import { saveGameData } from "./saveGame";
 import { loadGameData } from "./loadGame";
 
-export function upgradeButtonPointerEvents(button, upgrade) {
+// Function to update the style of the upgrade button based on the upgrade's active status
+export function upgradeButtonStyleUpdate(button, upgrade) {
   const background = button.getElement("background");
   const text = button.getElement("text");
 
@@ -9,43 +10,23 @@ export function upgradeButtonPointerEvents(button, upgrade) {
   button.off("pointerover");
   button.off("pointerout");
 
-  // Style for activated upgrades
-  if (upgrade.active === true) {
-    updateActivatedDescriptionStyle(background, text, upgrade);
-    button.on("pointerover", () => {
-      updateActivatedDescriptionStyle(background, text, upgrade);
-    });
-
-    button.on("pointerout", () => {
-      upgradeButtonStyleUpdate(button, upgrade);
-    });
-  } else {
-    // Style for unactivated upgrades
-    button.on("pointerover", () => {
-      updateUnactivatedDescriptionHoverStyle(background, text, upgrade);
-    });
-
-    button.on("pointerout", () => {
-      upgradeButtonStyleUpdate(button, upgrade); // Go back to the initial style
-    });
-  }
-}
-
-export function upgradeButtonStyleUpdate(button, upgrade) {
-  const background = button.getElement("background");
-  const text = button.getElement("text");
-
   if (upgrade.active === true) {
     // Style for activated upgrades
     updateActivatedNameStyle(background, text, upgrade);
     button.on("pointerover", () => {
       updateActivatedDescriptionStyle(background, text, upgrade);
     });
+    button.on("pointerout", () => {
+      updateActivatedNameStyle(background, text, upgrade);
+    });
   } else {
-    // Style for unactivated upgrades (or pointerout events)
+    // Style for unactivated upgrades
     updateUnactivatedNameHoverStyle(background, text, upgrade);
     button.on("pointerover", () => {
       updateUnactivatedDescriptionHoverStyle(background, text, upgrade);
+    });
+    button.on("pointerout", () => {
+      updateUnactivatedNameHoverStyle(background, text, upgrade);
     });
   }
 }
@@ -87,7 +68,7 @@ function updateUnactivatedDescriptionHoverStyle(background, text, upgrade) {
 function updateUnactivatedNameHoverStyle(background, text, upgrade) {
   background.setFillStyle(0xf4c6c6);
   text.setBackgroundColor("#F4C6C6");
-  text.setText(upgrade.name);
+  text.setText(`${upgrade.name}`);
   background.setStrokeStyle();
   text.setWordWrapWidth(190);
   background.resize(200, 50);

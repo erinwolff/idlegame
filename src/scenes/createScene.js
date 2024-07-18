@@ -69,7 +69,7 @@ export default class CreateScene extends Phaser.Scene {
     );
 
     this.acolyte.on("pointerdown", () => {
-      this.totalFaith += 30000;
+      this.totalFaith += 1;
       this.topbar.updateFaithLabel(this.totalFaith);
       this.playerName = this.sidebar.nameInput.text;
     });

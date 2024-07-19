@@ -82,7 +82,7 @@ export default class CreateScene extends Phaser.Scene {
     );
 
     this.acolyte.on("pointerdown", () => {
-      this.totalFaith += 10000;
+      this.totalFaith += 1;
       this.topbar.updateFaithLabel(this.totalFaith);
       this.playerName = this.sidebar.nameInput.text;
     });
@@ -190,6 +190,7 @@ export default class CreateScene extends Phaser.Scene {
       this.sidebar.currentPhaseLabel.text = this.currentPhase;
       this.sidebar.upgrades = getCurrentPhaseUpgrades(this.currentPhase);
       resetUpgradeButtons(this.currentPhase);
+      this.playerName = this.sidebar.nameInput.text;
       this.sidebar.destroy(true);
       this.sidebar = new Sidebar(
         this,
